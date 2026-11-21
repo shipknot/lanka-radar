@@ -680,7 +680,7 @@
       "issuer": "Election Commission",
       "headline": {
         "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE KURUWITA PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
-        "ta": null
+        "ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(ஆ) ஆம் பிரிவின் கீழ் குருவிட்ட பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
       },
       "keyNumbers": [],
       "published": "2026-11-13",
@@ -688,14 +688,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208155%20(E)_1794986799.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208155%20(S)_1794986787.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208155%20(S)_1794986787.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208155%20(T)_1795260468.pdf"
       },
       "data": {
         "number": "2514/45",
         "group": "elections",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE KURUWITA PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
@@ -738,7 +740,7 @@
       "issuer": "Election Commission",
       "headline": {
         "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE PORATHIVU PATTU PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
-        "ta": null
+        "ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(ஆ) ஆம் பிரிவின் கீழ் போரதீவுப்பற்று பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
       },
       "keyNumbers": [],
       "published": "2026-11-13",
@@ -746,14 +748,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208154%20(E)_1794898921.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208154%20(S)_1794898914.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208154%20(S)_1794898914.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208154%20(T)_1795260455.pdf"
       },
       "data": {
         "number": "2514/40",
         "group": "elections",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE PORATHIVU PATTU PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
@@ -766,7 +770,7 @@
       "issuer": "Election Commission",
       "headline": {
         "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE THUNUKKAI PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
-        "ta": null
+        "ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(ஆ) ஆம் பிரிவின் கீழ் துணுக்காய் பிரதேச சபைக்கு உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
       },
       "keyNumbers": [],
       "published": "2026-11-13",
@@ -774,14 +778,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208153%20(E)_1794898841.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208153%20(S)_1794898833.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208153%20(S)_1794898833.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208153%20(T)_1795260440.pdf"
       },
       "data": {
         "number": "2514/39",
         "group": "elections",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE THUNUKKAI PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
@@ -841,7 +847,7 @@
       "issuer": "Election Commission",
       "headline": {
         "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE BOPE PODDALA PRADESHIYA SABHA UNDER SECTION 66A(1)(a) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
-        "ta": null
+        "ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(அ) என்னும் பிரிவின் கீழ் போப்பே போத்தல பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
       },
       "keyNumbers": [],
       "published": "2026-11-12",
@@ -849,14 +855,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208150%20(E)_1794817681.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208150%20%20(S)_1794817671.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208150%20%20(S)_1794817671.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208150%20(T)_1795260421.pdf"
       },
       "data": {
         "number": "2514/32",
         "group": "elections",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE BOPE PODDALA PRADESHIYA SABHA UNDER SECTION 66A(1)(a) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
@@ -897,7 +905,7 @@
       "issuer": "Election Commission",
       "headline": {
         "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE WALAPANE PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
-        "ta": null
+        "ta": "(262 ஆம் அத்தியாயம்) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(ஆ) ஆம் பிரிவின் கீழ் வலப்பனை பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
       },
       "keyNumbers": [],
       "published": "2026-11-11",
@@ -905,14 +913,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208149%20(E)_1794817633.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208149%20(S)_1794817623.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208149%20(S)_1794817623.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208149%20(T)_1795260407.pdf"
       },
       "data": {
         "number": "2514/30",
         "group": "elections",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE WALAPANE PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
@@ -1015,7 +1025,7 @@
       "issuer": "Election Commission",
       "headline": {
         "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE MANMUNAI SOUTH WEST PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
-        "ta": null
+        "ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(ஆ) ஆம் பிரிவின் கீழ் மண்முனை தென்மேற்கு பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
       },
       "keyNumbers": [],
       "published": "2026-11-11",
@@ -1023,14 +1033,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208143%20(E)_1794817590.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208143%20%20(S)_1794817575.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208143%20%20(S)_1794817575.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208143%20(T)_1795260391.pdf"
       },
       "data": {
         "number": "2514/26",
         "group": "elections",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE MANMUNAI SOUTH WEST PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
@@ -1956,7 +1968,7 @@
       "issuer": "Election Commission",
       "headline": {
         "en": "Election Commission - Filling of vacancy Seruwila P.S",
-        "ta": null
+        "ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(அ) என்னும் பிரிவின் கீழ் சேருவில பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
       },
       "keyNumbers": [],
       "published": "2026-10-30",
@@ -1964,14 +1976,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208125%20(E)_1793868254.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208125%20(S)_1793868265.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208125%20(S)_1793868265.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208125%20(T)_1795260300.pdf"
       },
       "data": {
         "number": "2512/46",
         "group": "elections",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE SERUWILA PRADESHIYA SABHA UNDER SECTION 66A(1)(a) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
