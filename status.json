@@ -1,52 +1,52 @@
 {
   "schema": 1,
-  "checked": "2026-11-21T17:34:49Z",
+  "checked": "2026-11-21T23:18:35Z",
   "sources": {
     "holidays": {
-      "lastRun": "2026-11-21T17:34:49Z",
-      "lastSuccess": "2026-11-21T17:34:49Z",
+      "lastRun": "2026-11-21T23:18:35Z",
+      "lastSuccess": "2026-11-21T23:18:35Z",
       "lastError": null,
       "failures": 0
     },
     "rates": {
-      "lastRun": "2026-11-21T17:34:49Z",
-      "lastSuccess": "2026-11-21T17:34:49Z",
+      "lastRun": "2026-11-21T23:18:35Z",
+      "lastSuccess": "2026-11-21T23:18:35Z",
       "lastError": null,
       "failures": 0
     },
     "gazettes": {
-      "lastRun": "2026-11-21T17:34:49Z",
-      "lastSuccess": "2026-11-21T17:34:49Z",
+      "lastRun": "2026-11-21T23:18:35Z",
+      "lastSuccess": "2026-11-21T23:18:35Z",
       "lastError": null,
       "failures": 0
     },
     "exams": {
-      "lastRun": "2026-11-21T17:34:49Z",
-      "lastSuccess": "2026-11-21T17:34:49Z",
+      "lastRun": "2026-11-21T23:18:35Z",
+      "lastSuccess": "2026-11-21T23:18:35Z",
       "lastError": null,
       "failures": 0
     },
     "gas": {
-      "lastRun": "2026-11-21T17:34:49Z",
-      "lastSuccess": "2026-11-21T17:34:49Z",
+      "lastRun": "2026-11-21T23:18:35Z",
+      "lastSuccess": "2026-11-21T23:18:35Z",
       "lastError": null,
       "failures": 0
     },
     "jobs": {
-      "lastRun": "2026-11-21T17:34:49Z",
+      "lastRun": "2026-11-21T23:18:35Z",
       "lastSuccess": "2026-11-21T17:34:49Z",
-      "lastError": null,
-      "failures": 0
+      "lastError": "ValueError: no announcements on the Public Service Commission's homepage",
+      "failures": 1
     },
     "weekly": {
-      "lastRun": "2026-11-21T17:34:49Z",
-      "lastSuccess": "2026-11-21T17:34:49Z",
+      "lastRun": "2026-11-21T23:18:35Z",
+      "lastSuccess": "2026-11-21T23:18:35Z",
       "lastError": null,
       "failures": 0
     },
     "laugfs": {
-      "lastRun": "2026-11-21T17:34:49Z",
-      "lastSuccess": "2026-11-21T17:34:49Z",
+      "lastRun": "2026-11-21T23:18:35Z",
+      "lastSuccess": "2026-11-21T23:18:35Z",
       "lastError": null,
       "failures": 0
     }
