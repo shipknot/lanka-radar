@@ -376,6 +376,31 @@
       "alert": true
     },
     {
+      "id": "gazette-2515-06",
+      "source": "gazettes",
+      "topic": "gazettes",
+      "issuer": "Election Commission",
+      "headline": {
+        "en": "Election Commission",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-16",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/extra_gazettes",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208159%20(S)_1795430913.pdf"
+      },
+      "data": {
+        "number": "2515/06",
+        "group": "elections",
+        "languages": [
+          "si"
+        ]
+      },
+      "alert": true
+    },
+    {
       "id": "gas-laugfs-2026-11-14",
       "source": "laugfs",
       "topic": "prices",
@@ -6248,34 +6273,6 @@
         "page": "https://psc.gov.lk/index.php?lang=en"
       },
       "data": {},
-      "alert": true
-    },
-    {
-      "id": "gazette-2506-116",
-      "source": "gazettes",
-      "topic": "gazettes",
-      "issuer": "Central Bank of Sri Lanka",
-      "headline": {
-        "en": "Central Bank of Sri Lanka - Central Bank of Sri Lanka Act, No. 16 of 2023",
-        "ta": null
-      },
-      "keyNumbers": [],
-      "published": "2026-09-18",
-      "effective": null,
-      "links": {
-        "page": "https://documents.gov.lk/web/extra_gazettes",
-        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2047954%20(E)_1792574647.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2047954%20(S)_1792574659.pdf"
-      },
-      "data": {
-        "number": "2506/116",
-        "group": "prices-taxes",
-        "languages": [
-          "en",
-          "si"
-        ],
-        "title": "CENTRAL BANK OF SRI LANKA ACT, No. 16 OF 2023"
-      },
       "alert": true
     }
   ]
