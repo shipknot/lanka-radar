@@ -4729,7 +4729,8 @@
   "2513/03": {
     "files": {
       "si": "extra-gazette-content/G 48541 (S) New_1795251344.pdf",
-      "en": "extra-gazette-content/G 48541- I (I) (E) Ceylon Petrolium Cop. Act, No.28 of 1961_1795251352.pdf"
+      "en": "extra-gazette-content/G 48541- I (I) (E) Ceylon Petrolium Cop. Act, No.28 of 1961_1795251352.pdf",
+      "ta": "extra-gazette-content/G 48541 (T)_1795604891.pdf"
     },
     "reader": 6,
     "title_en": "CEYLON PETROLEUM CORPORATION ACT, No. 28 OF 1961 Order under Section 66(1)(a)",
@@ -4758,12 +4759,46 @@
         "unit": "LKR",
         "previous": 475.0
       }
-    ]
+    ],
+    "title_ta": "1961 ஆம் ஆண்டின் 28 ஆம் இலக்க, இலங்கை பெற்றோலியக் கூட்டுத்தாபனச் சட்டத்தின் 66 1 (a) ஆம் பிரிவின் கீழான கட்டளைகள்"
   },
   "2515/06": {
     "files": {
-      "si": "extra-gazette-content/PG 8159 (S)_1795430913.pdf"
+      "si": "extra-gazette-content/PG 8159 (S)_1795430913.pdf",
+      "ta": "extra-gazette-content/PG 8159 (T)_1795604999.pdf"
     },
-    "reader": 6
+    "reader": 6,
+    "title_ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(ஆ) ஆம் பிரிவின் கீழ் வெலிமடை பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
+  },
+  "2515/29": {
+    "files": {
+      "si": "extra-gazette-content/G 48556 (S)_1795607952.pdf",
+      "en": "extra-gazette-content/G 48556 (E) NEW_1795607959.pdf"
+    },
+    "reader": 6,
+    "title_en": "CENTRAL BANK OF SRI LANKA ACT, No. 16 OF 2023"
+  },
+  "2515/21": {
+    "files": {
+      "en": "extra-gazette-content/G 48548 (E)_1795581742.pdf"
+    },
+    "reader": 6,
+    "title_en": "SRI LANKA ELECTRICITY ACT, No. 36 OF 2024"
+  },
+  "2515/18": {
+    "files": {
+      "si": "extra-gazette-content/PG 8169  (S)_1795598907.pdf",
+      "en": "extra-gazette-content/PG 8169  (E)_1795598919.pdf"
+    },
+    "reader": 6,
+    "title_en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE KORALAI PATTU PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
+  },
+  "2515/03": {
+    "files": {
+      "en": "extra-gazette-content/PG 8158 (E)_1795581813.pdf",
+      "si": "extra-gazette-content/PG 8158 (S)_1795581805.pdf"
+    },
+    "reader": 6,
+    "title_en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE WALIKAMAM NORTH PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
   }
 }

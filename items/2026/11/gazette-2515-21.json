@@ -1,0 +1,26 @@
+{
+  "id": "gazette-2515-21",
+  "source": "gazettes",
+  "topic": "gazettes",
+  "issuer": "Ministry of Energy",
+  "headline": {
+    "en": "Ministry of Energy - Regulation under the Sri Lanka Election Act 36 of 2024",
+    "ta": null
+  },
+  "keyNumbers": [],
+  "published": "2026-11-19",
+  "effective": null,
+  "links": {
+    "page": "https://documents.gov.lk/web/extra_gazettes",
+    "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048548%20(E)_1795581742.pdf"
+  },
+  "data": {
+    "number": "2515/21",
+    "group": "energy",
+    "languages": [
+      "en"
+    ],
+    "title": "SRI LANKA ELECTRICITY ACT, No. 36 OF 2024"
+  },
+  "alert": true
+}

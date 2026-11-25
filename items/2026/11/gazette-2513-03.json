@@ -5,7 +5,7 @@
   "issuer": "Ministry of Energy",
   "headline": {
     "en": "Ministry of Energy - Ceylon Petrolium Corporation Act No 8 of 1961 - Revise the Fuel Price",
-    "ta": null
+    "ta": "1961 ஆம் ஆண்டின் 28 ஆம் இலக்க, இலங்கை பெற்றோலியக் கூட்டுத்தாபனச் சட்டத்தின் 66 1 (a) ஆம் பிரிவின் கீழான கட்டளைகள்"
   },
   "keyNumbers": [
     {
@@ -38,14 +38,16 @@
   "links": {
     "page": "https://documents.gov.lk/web/extra_gazettes",
     "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048541-%20I%20(I)%20(E)%20Ceylon%20Petrolium%20Cop.%20Act%2C%20No.28%20of%201961_1795251352.pdf",
-    "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048541%20(S)%20New_1795251344.pdf"
+    "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048541%20(S)%20New_1795251344.pdf",
+    "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048541%20(T)_1795604891.pdf"
   },
   "data": {
     "number": "2513/03",
     "group": "energy",
     "languages": [
       "en",
-      "si"
+      "si",
+      "ta"
     ],
     "title": "CEYLON PETROLEUM CORPORATION ACT, No. 28 OF 1961 Order under Section 66(1)(a)"
   },

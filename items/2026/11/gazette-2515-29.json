@@ -1,0 +1,28 @@
+{
+  "id": "gazette-2515-29",
+  "source": "gazettes",
+  "topic": "gazettes",
+  "issuer": "Central Bank of Sri Lanka",
+  "headline": {
+    "en": "Central Bank of Sri Lanka - Rule on Reserve Requirement",
+    "ta": null
+  },
+  "keyNumbers": [],
+  "published": "2026-11-20",
+  "effective": null,
+  "links": {
+    "page": "https://documents.gov.lk/web/extra_gazettes",
+    "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048556%20(E)%20NEW_1795607959.pdf",
+    "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048556%20(S)_1795607952.pdf"
+  },
+  "data": {
+    "number": "2515/29",
+    "group": "prices-taxes",
+    "languages": [
+      "en",
+      "si"
+    ],
+    "title": "CENTRAL BANK OF SRI LANKA ACT, No. 16 OF 2023"
+  },
+  "alert": true
+}

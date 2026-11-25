@@ -3,6 +3,34 @@
   "month": "2026-11",
   "items": [
     {
+      "id": "gazette-2515-29",
+      "source": "gazettes",
+      "topic": "gazettes",
+      "issuer": "Central Bank of Sri Lanka",
+      "headline": {
+        "en": "Central Bank of Sri Lanka - Rule on Reserve Requirement",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-20",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/extra_gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048556%20(E)%20NEW_1795607959.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048556%20(S)_1795607952.pdf"
+      },
+      "data": {
+        "number": "2515/29",
+        "group": "prices-taxes",
+        "languages": [
+          "en",
+          "si"
+        ],
+        "title": "CENTRAL BANK OF SRI LANKA ACT, No. 16 OF 2023"
+      },
+      "alert": true
+    },
+    {
       "id": "jobs-psc-1795080610",
       "source": "jobs",
       "topic": "jobs",
@@ -19,6 +47,60 @@
         "page": "https://psc.gov.lk/index.php?lang=en"
       },
       "data": {},
+      "alert": true
+    },
+    {
+      "id": "gazette-2515-21",
+      "source": "gazettes",
+      "topic": "gazettes",
+      "issuer": "Ministry of Energy",
+      "headline": {
+        "en": "Ministry of Energy - Regulation under the Sri Lanka Election Act 36 of 2024",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-19",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/extra_gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048548%20(E)_1795581742.pdf"
+      },
+      "data": {
+        "number": "2515/21",
+        "group": "energy",
+        "languages": [
+          "en"
+        ],
+        "title": "SRI LANKA ELECTRICITY ACT, No. 36 OF 2024"
+      },
+      "alert": true
+    },
+    {
+      "id": "gazette-2515-18",
+      "source": "gazettes",
+      "topic": "gazettes",
+      "issuer": "Election Commission",
+      "headline": {
+        "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE KORALAI PATTU PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-18",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/extra_gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208169%20%20(E)_1795598919.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208169%20%20(S)_1795598907.pdf"
+      },
+      "data": {
+        "number": "2515/18",
+        "group": "elections",
+        "languages": [
+          "en",
+          "si"
+        ],
+        "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE KORALAI PATTU PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
+      },
       "alert": true
     },
     {
@@ -383,6 +465,33 @@
       "issuer": "Election Commission",
       "headline": {
         "en": "Election Commission",
+        "ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(ஆ) ஆம் பிரிவின் கீழ் வெலிமடை பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
+      },
+      "keyNumbers": [],
+      "published": "2026-11-16",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/extra_gazettes",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208159%20(S)_1795430913.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208159%20(T)_1795604999.pdf"
+      },
+      "data": {
+        "number": "2515/06",
+        "group": "elections",
+        "languages": [
+          "si",
+          "ta"
+        ]
+      },
+      "alert": true
+    },
+    {
+      "id": "gazette-2515-03",
+      "source": "gazettes",
+      "topic": "gazettes",
+      "issuer": "Election Commission",
+      "headline": {
+        "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE WALIKAMAM NORTH PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
         "ta": null
       },
       "keyNumbers": [],
@@ -390,14 +499,17 @@
       "effective": null,
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208159%20(S)_1795430913.pdf"
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208158%20(E)_1795581813.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208158%20(S)_1795581805.pdf"
       },
       "data": {
-        "number": "2515/06",
+        "number": "2515/03",
         "group": "elections",
         "languages": [
+          "en",
           "si"
-        ]
+        ],
+        "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE WALIKAMAM NORTH PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
       "alert": true
     },
@@ -698,6 +810,276 @@
         "district": "Colombo"
       },
       "alert": true
+    },
+    {
+      "id": "weekly-2515-f5cd1672",
+      "source": "weekly",
+      "topic": "exams",
+      "issuer": "Ministry of Public Administration, Provincial Councils and Local Government",
+      "headline": {
+        "en": "Limited Competitive Examination for Recruitment to Grade III of Sri Lanka Accountants' Service - 2026",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "exams",
+        "page": 84,
+        "number": "2515",
+        "closes": "2026-12-11"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-e38dd29c",
+      "source": "weekly",
+      "topic": "jobs",
+      "issuer": "Registrar General's Department",
+      "headline": {
+        "en": "Post of Registrar of Muslim Marriages (Sinhala)",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "vacancies",
+        "page": 5,
+        "number": "2515",
+        "closes": "2026-12-14"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-d8144e83",
+      "source": "weekly",
+      "topic": "jobs",
+      "issuer": "Registrar General's Department",
+      "headline": {
+        "en": "Post of Registrar of Births and Deaths - Sinhala Medium",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "vacancies",
+        "page": 4,
+        "number": "2515",
+        "closes": "2026-12-14"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-c4a21c65",
+      "source": "weekly",
+      "topic": "jobs",
+      "issuer": "Ministry of Health and Mass Media",
+      "headline": {
+        "en": "Recruitment On Open Basis to the Post of Nutritionist In Grade II of The Field/Office-Based Officer Segment 02, Service Category (MN 05-2006 A) - 2026",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "vacancies",
+        "page": 7,
+        "number": "2515",
+        "closes": "2026-12-14"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-bfca7310",
+      "source": "weekly",
+      "topic": "exams",
+      "issuer": "Department of Labour",
+      "headline": {
+        "en": "Open Competitive Examination for Recruitment to the Post of Stenographer - Grade III (Management Assistant - Non - Technical Service - Category 2) of the Department of Labour - 2026",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "exams",
+        "page": 19,
+        "number": "2515",
+        "closes": "2026-12-14"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-afa7e26d",
+      "source": "weekly",
+      "topic": "jobs",
+      "issuer": "Registrar General's Department",
+      "headline": {
+        "en": "Amendment of closing date of Applications for Recruitment of Registrar of Births, Deaths and Marriages/ Additional Marriages",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "vacancies",
+        "page": 6,
+        "number": "2515",
+        "closes": "2026-12-14"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-9f3092de",
+      "source": "weekly",
+      "topic": "exams",
+      "issuer": "Sri Lanka Railway",
+      "headline": {
+        "en": "Recruitment to the Training Period for recruitment to the Posts of Basic Technician, Grade III on Open Basis under the Scheme of Recruitment- (MT-01) Service Category 03 of the Sri Lanka Railway Department - 2026",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "exams",
+        "page": 93,
+        "number": "2515",
+        "closes": "2026-12-14"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-716ae18d",
+      "source": "weekly",
+      "topic": "exams",
+      "issuer": "Ministry of Health and Mass Media",
+      "headline": {
+        "en": "Open Competitive Examination for Recruitment to Grade III of the Departmental Posts in the Primary Level Skilled Service Category (PL 03-2006-A) of the Ministry of Health and Mass Media-2026",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "exams",
+        "page": 33,
+        "number": "2515",
+        "closes": "2026-12-13"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-6d7ab9b1",
+      "source": "weekly",
+      "topic": "exams",
+      "issuer": "Ministry of Fisheries, Aquatic and Ocean Resources",
+      "headline": {
+        "en": "Competitive Examination for Recruitment on an open basis to the Post of Junior Radio Officer Trainee Grade in the Management Assistant Technical Category - Segment 3 of the Department of Fisheries and Aquatic Resources - 2026",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "exams",
+        "page": 46,
+        "number": "2515",
+        "closes": "2026-12-11"
+      },
+      "alert": false
+    },
+    {
+      "id": "weekly-2515-1797304a",
+      "source": "weekly",
+      "topic": "exams",
+      "issuer": "Examination Notice",
+      "headline": {
+        "en": "Common Competitive Examination for the Recruitment Grade III posts in Sri Lanka Education Administrative Service, Sri Lanka Administrative Service, Sri Lanka Agricultural Service, Sri Lanka Planning Service, Sri Lanka Accountants Service, Sri Lanka Engineering Service, Sri Lanka Architects' Service and Sri Lanka Scientific Service - 2026",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-13",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+      },
+      "data": {
+        "week": "2026-11-13",
+        "section": "exams",
+        "page": 50,
+        "number": "2515",
+        "closes": "2026-12-11"
+      },
+      "alert": false
     },
     {
       "id": "gazette-2514-45",
@@ -1536,7 +1918,7 @@
       "issuer": "Ministry of Energy",
       "headline": {
         "en": "Ministry of Energy - Ceylon Petrolium Corporation Act No 8 of 1961 - Revise the Fuel Price",
-        "ta": null
+        "ta": "1961 ஆம் ஆண்டின் 28 ஆம் இலக்க, இலங்கை பெற்றோலியக் கூட்டுத்தாபனச் சட்டத்தின் 66 1 (a) ஆம் பிரிவின் கீழான கட்டளைகள்"
       },
       "keyNumbers": [
         {
@@ -1569,14 +1951,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048541-%20I%20(I)%20(E)%20Ceylon%20Petrolium%20Cop.%20Act%2C%20No.28%20of%201961_1795251352.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048541%20(S)%20New_1795251344.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048541%20(S)%20New_1795251344.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048541%20(T)_1795604891.pdf"
       },
       "data": {
         "number": "2513/03",
         "group": "energy",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "CEYLON PETROLEUM CORPORATION ACT, No. 28 OF 1961 Order under Section 66(1)(a)"
       },

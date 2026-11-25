@@ -1,0 +1,27 @@
+{
+  "id": "weekly-2515-1797304a",
+  "source": "weekly",
+  "topic": "exams",
+  "issuer": "Examination Notice",
+  "headline": {
+    "en": "Common Competitive Examination for the Recruitment Grade III posts in Sri Lanka Education Administrative Service, Sri Lanka Administrative Service, Sri Lanka Agricultural Service, Sri Lanka Planning Service, Sri Lanka Accountants Service, Sri Lanka Engineering Service, Sri Lanka Architects' Service and Sri Lanka Scientific Service - 2026",
+    "ta": null
+  },
+  "keyNumbers": [],
+  "published": "2026-11-13",
+  "effective": null,
+  "links": {
+    "page": "https://documents.gov.lk/web/gazettes",
+    "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
+    "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
+    "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+  },
+  "data": {
+    "week": "2026-11-13",
+    "section": "exams",
+    "page": 50,
+    "number": "2515",
+    "closes": "2026-12-11"
+  },
+  "alert": false
+}

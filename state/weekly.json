@@ -697,6 +697,95 @@
         "weekly-2514-17b9c42b",
         "weekly-2514-9c3a5f8b"
       ]
+    },
+    "2026-11-13": {
+      "file": "gazette-content/I-II(A) - (13.11.2026) - Press (E)_1795605021.pdf",
+      "reader": 1,
+      "number": "2515",
+      "notices": [
+        {
+          "section": "vacancies",
+          "title": "Post of Registrar of Births and Deaths - Sinhala Medium",
+          "page": 4,
+          "issuer": "Registrar General's Department",
+          "closes": "2026-12-14"
+        },
+        {
+          "section": "vacancies",
+          "title": "Post of Registrar of Muslim Marriages (Sinhala)",
+          "page": 5,
+          "issuer": "Registrar General's Department",
+          "closes": "2026-12-14"
+        },
+        {
+          "section": "vacancies",
+          "title": "Amendment of closing date of Applications for Recruitment of Registrar of Births, Deaths and Marriages/ Additional Marriages",
+          "page": 6,
+          "issuer": "Registrar General's Department",
+          "closes": "2026-12-14"
+        },
+        {
+          "section": "vacancies",
+          "title": "Recruitment On Open Basis to the Post of Nutritionist In Grade II of The Field/Office-Based Officer Segment 02, Service Category (MN 05-2006 A) - 2026",
+          "page": 7,
+          "issuer": "Ministry of Health and Mass Media",
+          "closes": "2026-12-14"
+        },
+        {
+          "section": "exams",
+          "title": "Open Competitive Examination for Recruitment to the Post of Stenographer - Grade III (Management Assistant - Non - Technical Service - Category 2) of the Department of Labour - 2026",
+          "page": 19,
+          "issuer": "Department of Labour",
+          "closes": "2026-12-14"
+        },
+        {
+          "section": "exams",
+          "title": "Open Competitive Examination for Recruitment to Grade III of the Departmental Posts in the Primary Level Skilled Service Category (PL 03-2006-A) of the Ministry of Health and Mass Media-2026",
+          "page": 33,
+          "issuer": "Ministry of Health and Mass Media",
+          "closes": "2026-12-13"
+        },
+        {
+          "section": "exams",
+          "title": "Competitive Examination for Recruitment on an open basis to the Post of Junior Radio Officer Trainee Grade in the Management Assistant Technical Category - Segment 3 of the Department of Fisheries and Aquatic Resources - 2026",
+          "page": 46,
+          "issuer": "Ministry of Fisheries, Aquatic and Ocean Resources",
+          "closes": "2026-12-11"
+        },
+        {
+          "section": "exams",
+          "title": "Common Competitive Examination for the Recruitment Grade III posts in Sri Lanka Education Administrative Service, Sri Lanka Administrative Service, Sri Lanka Agricultural Service, Sri Lanka Planning Service, Sri Lanka Accountants Service, Sri Lanka Engineering Service, Sri Lanka Architects' Service and Sri Lanka Scientific Service - 2026",
+          "page": 50,
+          "issuer": "Examination Notice",
+          "closes": "2026-12-11"
+        },
+        {
+          "section": "exams",
+          "title": "Limited Competitive Examination for Recruitment to Grade III of Sri Lanka Accountants' Service - 2026",
+          "page": 84,
+          "issuer": "Ministry of Public Administration, Provincial Councils and Local Government",
+          "closes": "2026-12-11"
+        },
+        {
+          "section": "exams",
+          "title": "Recruitment to the Training Period for recruitment to the Posts of Basic Technician, Grade III on Open Basis under the Scheme of Recruitment- (MT-01) Service Category 03 of the Sri Lanka Railway Department - 2026",
+          "page": 93,
+          "issuer": "Sri Lanka Railway",
+          "closes": "2026-12-14"
+        }
+      ],
+      "items": [
+        "weekly-2515-d8144e83",
+        "weekly-2515-e38dd29c",
+        "weekly-2515-afa7e26d",
+        "weekly-2515-c4a21c65",
+        "weekly-2515-bfca7310",
+        "weekly-2515-716ae18d",
+        "weekly-2515-6d7ab9b1",
+        "weekly-2515-1797304a",
+        "weekly-2515-f5cd1672",
+        "weekly-2515-9f3092de"
+      ]
     }
   }
 }
