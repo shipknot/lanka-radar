@@ -1,8 +1,9 @@
 """One module per source, each with a NAME and run(web, store, today).
 
 run() returns how many items were new or changed. Sources that only answer inside
-Sri Lanka (CEYPETCO's fuel prices, CBSL's rate search and price reports) are read by
-the app on the phone instead, since GitHub's servers are abroad.
+Sri Lanka (CEYPETCO's fuel prices, CBSL's rate search and price reports, HARTI's
+bulletin and, since November 2026, the Public Service Commission's job notices) are
+read by the app on the phone instead, since GitHub's servers are abroad.
 """
 
 from __future__ import annotations
@@ -10,7 +11,7 @@ from __future__ import annotations
 from datetime import date
 from typing import TYPE_CHECKING, Protocol
 
-from lanka_radar.sources import exams, gas, gazettes, holidays, jobs, laugfs, rates, weekly
+from lanka_radar.sources import exams, gas, gazettes, holidays, laugfs, rates, weekly
 
 if TYPE_CHECKING:
     from lanka_radar.store import Store
@@ -24,5 +25,5 @@ class Source(Protocol):
 
 
 SOURCES: dict[str, Source] = {
-    module.NAME: module for module in (gazettes, weekly, exams, jobs, gas, laugfs, rates, holidays)
+    module.NAME: module for module in (gazettes, weekly, exams, gas, laugfs, rates, holidays)
 }
