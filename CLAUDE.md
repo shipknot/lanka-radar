@@ -28,6 +28,7 @@ Scraper tests live in `scrapers/tests/` and run on saved fixtures in `scrapers/t
 
 - Only GitHub and the app. No servers, accounts, Firebase, analytics, crash reporting or AI services.
 - Scrapers write only to the `data` branch, through the scrape workflow. `main` holds code only.
+- The Pages workflow publishes the `data` branch, with `site/` (the privacy policy), at `shipknot.github.io/lanka-radar/`. It only reads `data`.
 - One module per source in `scrapers/src/lanka_radar/sources/`, with a `NAME` and `run(web, store, today)`. Parsing lives in pure functions tested against saved responses in `scrapers/tests/fixtures/` (kept byte for byte: `-text` in `.gitattributes`). Shared code (HTTP client `web.py`, item model, `store.py`) lives in the package, not in the source modules.
 - Feed items are news (a price change, a big rate move, a gazette, an exam notice). Current values belong in `datasets/`, not in the feed.
 - Gazette PDFs are read in `pdfs.py`, once per gazette (cached in `state/gazette-pdfs.json`, read again only when its files change, or once when a reader version bump (`READER`) can improve it: a missing Tamil title, price labels), at most `PDF_BUDGET` per run. Tamil text is trusted from Bamini-encoded fonts (converted with Open-Tamil) and from Arial Unicode MS read by glyph ID (the PDFs' text maps for it are scrambled); Tamil in any other font is never used as a headline. The English PDF's first pages are kept as text for search (`text/`, bundled by month in `texts/`).

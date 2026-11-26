@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ThivaaVipul/lanka-radar/releases/latest"><img src="https://img.shields.io/github/v/release/ThivaaVipul/lanka-radar?style=flat-square&label=release&color=0F766E" alt="Latest release"></a>
-  <a href="https://github.com/ThivaaVipul/lanka-radar/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/ThivaaVipul/lanka-radar/ci.yml?branch=main&style=flat-square&label=CI" alt="CI status"></a>
+  <a href="https://github.com/shipknot/lanka-radar/releases/latest"><img src="https://img.shields.io/github/v/release/shipknot/lanka-radar?style=flat-square&label=release&color=0F766E" alt="Latest release"></a>
+  <a href="https://github.com/shipknot/lanka-radar/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/shipknot/lanka-radar/ci.yml?branch=main&style=flat-square&label=CI" alt="CI status"></a>
   <img src="https://img.shields.io/badge/Android-7.0%2B-0F766E?style=flat-square" alt="Android 7.0 or newer">
-  <a href="LICENSE"><img src="https://img.shields.io/github/license/ThivaaVipul/lanka-radar?style=flat-square&color=0F766E" alt="MIT license"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/shipknot/lanka-radar?style=flat-square&color=0F766E" alt="MIT license"></a>
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/ThivaaVipul/lanka-radar/releases/latest"><b>Download the APK</b></a>
+  <a href="https://github.com/shipknot/lanka-radar/releases/latest"><b>Download the APK</b></a>
   &nbsp;&nbsp;|&nbsp;&nbsp;
   <a href="#what-it-watches">What it watches</a>
   &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -152,10 +152,11 @@ flowchart LR
 - No account, no sign-in, no ads, no analytics.
 - No server of its own: just GitHub, the official sources and OpenStreetMap's tiles for the map.
 - Your places stay on your phone. Sharing a power cut names the CEB area, never your place.
+- The details are in the [privacy policy](https://shipknot.github.io/lanka-radar/privacy/).
 
 ## Install
 
-1. Download the APK from the [latest release](https://github.com/ThivaaVipul/lanka-radar/releases/latest). It needs Android 7.0 or newer on a 64-bit (arm64) phone.
+1. Download the APK from the [latest release](https://github.com/shipknot/lanka-radar/releases/latest). It needs Android 7.0 or newer on a 64-bit (arm64) phone.
 2. Open it and allow installs from your browser or file manager when Android asks.
 3. For alerts on time, set the app's battery use to **No restrictions** (on Xiaomi phones, turn on **Autostart** too).
 
@@ -164,7 +165,7 @@ A new release installs over the old one and keeps your data.
 ## Build it yourself
 
 ```bash
-git clone https://github.com/ThivaaVipul/lanka-radar.git
+git clone https://github.com/shipknot/lanka-radar.git
 cd lanka-radar/app
 flutter pub get
 flutter run
@@ -178,4 +179,4 @@ Gazettes from the Department of Government Printing, fuel prices from CEYPETCO, 
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+The code is MIT licensed: see [LICENSE](LICENSE). The name "Lanka Radar" and its radar icon are not covered by it, so a copy published elsewhere needs its own name and icon.

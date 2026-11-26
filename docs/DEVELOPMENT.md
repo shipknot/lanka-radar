@@ -12,7 +12,7 @@ How Lanka Radar is built, where its data lives and how releases work. What the a
 ## Getting started
 
 ```bash
-git clone https://github.com/ThivaaVipul/lanka-radar.git
+git clone https://github.com/shipknot/lanka-radar.git
 cd lanka-radar
 python -m venv scrapers/.venv
 source scrapers/.venv/bin/activate      # Windows (Git Bash): source scrapers/.venv/Scripts/activate
@@ -46,6 +46,7 @@ CI (`.github/workflows/ci.yml`) runs all of these on every push to `main` and ev
 scrapers/          Python package that reads the sources (runs on GitHub Actions)
 app/               Flutter app, Android only
 scripts/release/   works out the next version and release notes
+site/              pages published with the data on GitHub Pages (the privacy policy)
 docs/              plan, this guide, the README's images
 ```
 
@@ -63,6 +64,8 @@ The scrape workflow (`.github/workflows/scrape.yml`) runs every hour and commits
 | `datasets/holidays.json` | public holidays from 2026 on, Poya days included |
 | `status.json` | each source's last run, last success and last error |
 | `state/<name>.json` | the scrapers' own bookkeeping, not for the app |
+
+The Pages workflow (`.github/workflows/pages.yml`) publishes the `data` branch, with the pages in `site/` (the privacy policy), at https://shipknot.github.io/lanka-radar/ after each successful scrape and on changes to `site/`. It only reads the branch.
 
 Feed items are news: a gazette (fuel price revisions included), a USD/LKR move of 2% or more in a week, an exam notice. Gazettes become items only when they belong to a daily-life group: prices, taxes and imports; energy and utilities; wages and labour; elections. Exam notices become items for school exams (O/L, A/L, Grade 5 scholarship, GIT) and the department's own press releases and notices; a timetable's exam days, read once from its PDF, go in its data as `days`. The weekly gazette's Part I (IIA) brings one item per vacancy (under jobs) and per examination notice (under exams), with its page in the PDF and the closing date for applications. A new Litro price list is an item too, its prices read off the list's image with OCR (Tesseract, on GitHub's runner) for every district and cylinder size. Laugfs's price list is a table on its site: its current prices are a dataset, and a change becomes an item.
 

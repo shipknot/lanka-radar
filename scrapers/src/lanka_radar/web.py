@@ -9,7 +9,7 @@ from typing import Any, Self
 
 import httpx
 
-USER_AGENT = "Mozilla/5.0 (compatible; LankaRadar/0.1; +https://github.com/ThivaaVipul/lanka-radar)"
+USER_AGENT = "Mozilla/5.0 (compatible; LankaRadar/0.1; +https://github.com/shipknot/lanka-radar)"
 ATTEMPTS = 3
 
 
