@@ -1,0 +1,60 @@
+# Publishes the data branch, with the pages in site/ (the privacy policy), on
+# GitHub Pages at https://shipknot.github.io/lanka-radar/, where the app reads
+# it. Runs after each successful scrape, on changes to site/ on main, and by
+# hand. It only reads the data branch: the scrape workflow alone writes it.
+name: Pages
+
+on:
+  workflow_run:
+    workflows: [Scrape]
+    types: [completed]
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+# One deployment at a time, in order; never cancel one halfway.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    # A failed scrape leaves nothing new to publish.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check out the data branch
+        uses: actions/checkout@v7
+        with:
+          ref: data
+          path: _data
+
+      - name: Put the site together
+        run: |
+          mkdir _site
+          rsync -a --exclude .git _data/ _site/
+          cp -R site/. _site/
+          echo "$(find _site -type f | wc -l) files, $(du -sh _site | cut -f1)"
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v5
