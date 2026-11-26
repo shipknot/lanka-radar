@@ -36,7 +36,7 @@ Scraper tests live in `scrapers/tests/` and run on saved fixtures in `scrapers/t
 - GitHub's runners are abroad. Sources that only answer inside Sri Lanka (CEYPETCO's fuel prices, CBSL's rate search and price reports, HARTI's daily bulletin) are read by the app on the phone, never by the workflow. Items the app makes use the same IDs as the workflow's (only USD/LKR moves; fuel changes come in as gazettes). Before building a new source into the workflow, check it loads from servers abroad (check-host.net works).
 - Be polite to government sites: a user agent that names the project, retries with backoff, never re-download a PDF already seen.
 - Item IDs are stable and built from the source's own IDs. Changing the ID scheme needs a log entry in the plan.
-- The app reads only `raw.githubusercontent.com/ThivaaVipul/lanka-radar/data/...`. No tokens or keys in the app.
+- The app reads only `shipknot.github.io/lanka-radar/...`, where the Pages workflow publishes the `data` branch. No tokens or keys in the app.
 - Notifications are local, from a WorkManager sync. No push service.
 
 ## Git workflow and releases

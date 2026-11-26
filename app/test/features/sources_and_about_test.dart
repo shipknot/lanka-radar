@@ -83,9 +83,8 @@ void main() {
     expect(find.textContaining('Last try failed'), findsNWidgets(4));
   });
 
-  testWidgets('About shows the version and opens the source code', (
-    tester,
-  ) async {
+  testWidgets('About says who makes the app, and opens its code and privacy '
+      'policy', (tester) async {
     final opened = <Uri>[];
     await tester.pumpWidget(
       RepositoryProvider.value(
@@ -103,8 +102,16 @@ void main() {
     );
 
     expect(find.text('Version 0.1.0 (1)'), findsOneWidget);
+    expect(
+      find.textContaining('not affiliated with the Government of Sri Lanka'),
+      findsOneWidget,
+    );
 
     await tester.tap(find.text('Source code'));
-    expect(opened, [Uri.parse(AboutPage.repository)]);
+    await tester.tap(find.text('Privacy policy'));
+    expect(opened, [
+      Uri.parse('https://github.com/shipknot/lanka-radar'),
+      Uri.parse('https://shipknot.github.io/lanka-radar/privacy/'),
+    ]);
   });
 }

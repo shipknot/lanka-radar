@@ -5,15 +5,16 @@ import 'package:http/http.dart' as http;
 /// A file read from the data branch, with its ETag for the next request.
 typedef Fetched = ({String body, String? etag});
 
-/// Reads the workflow's `data` branch from raw.githubusercontent.com: public, no
-/// token. Unchanged files answer 304, so a refresh downloads only what changed.
+/// Reads the workflow's `data` branch where GitHub Pages publishes it: public,
+/// no token. Unchanged files answer 304, so a refresh downloads only what
+/// changed.
 class DataBranch {
   DataBranch({http.Client? client, Uri? base})
     : _client = client ?? http.Client(),
       _base = base ?? defaultBase;
 
   static final defaultBase = Uri.parse(
-    'https://raw.githubusercontent.com/ThivaaVipul/lanka-radar/data/',
+    'https://shipknot.github.io/lanka-radar/',
   );
 
   final http.Client _client;

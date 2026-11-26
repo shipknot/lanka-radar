@@ -12,7 +12,7 @@ import 'package:pdfrx/pdfrx.dart';
 /// (GitHub's servers abroad can't). Requests name the project, as the scrapers do.
 const userAgent =
     'Mozilla/5.0 (compatible; LankaRadar/0.1; '
-    '+https://github.com/ThivaaVipul/lanka-radar)';
+    '+https://github.com/shipknot/lanka-radar)';
 
 const _timeout = Duration(seconds: 20);
 
