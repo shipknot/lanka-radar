@@ -3,14 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lanka_radar/app/app_info.dart';
 import 'package:lanka_radar/core/links.dart';
 
-/// The app's version, where its data comes from, its code and licenses.
+/// The app's version, where its data comes from, its code, privacy policy and
+/// licenses.
 class AboutPage extends StatelessWidget {
   const AboutPage({this.open = openExternally, super.key});
 
   static Route<void> route() =>
       MaterialPageRoute(builder: (context) => const AboutPage());
 
-  static const repository = 'https://github.com/ThivaaVipul/lanka-radar';
+  static const repository = 'https://github.com/shipknot/lanka-radar';
+  static const privacyPolicy =
+      'https://shipknot.github.io/lanka-radar/privacy/';
 
   final OpenLink open;
 
@@ -36,8 +39,9 @@ class AboutPage extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Not affiliated with any of them. Every item links to its '
-            'official source.',
+            'An independent app by ShipKnot, not affiliated with the '
+            'Government of Sri Lanka or any of these sources. Every item '
+            'links to its official source.',
             style: quiet,
           ),
           const SizedBox(height: 16),
@@ -48,6 +52,11 @@ class AboutPage extends StatelessWidget {
                   leading: const Icon(Icons.code),
                   title: const Text('Source code'),
                   onTap: () => open(Uri.parse(repository)),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.privacy_tip_outlined),
+                  title: const Text('Privacy policy'),
+                  onTap: () => open(Uri.parse(privacyPolicy)),
                 ),
                 ListTile(
                   leading: const Icon(Icons.description_outlined),
