@@ -85,6 +85,18 @@ class _AlertsViewState extends State<_AlertsView> {
                     onTap: () => unawaited(settings.openNotifications()),
                   ),
                 ),
+              if (state.remindersMayBeLate)
+                Card(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.alarm_off_outlined,
+                      color: colors.tertiary,
+                    ),
+                    title: const Text('Reminders may be late'),
+                    trailing: const Icon(Icons.open_in_new),
+                    onTap: () => unawaited(settings.openAlarms()),
+                  ),
+                ),
               _Section(
                 title: 'Topics',
                 children: [

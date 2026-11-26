@@ -40,6 +40,10 @@ abstract interface class Notifier {
 
   /// Whether Android lets the app post notifications.
   Future<bool> enabled();
+
+  /// Whether Android lets the app set exact alarms (Alarms & reminders); before
+  /// Android 12 it always does.
+  Future<bool> exactAlarmsAllowed();
 }
 
 /// The payloads of the fuel, holiday and power cut notifications.
@@ -283,7 +287,7 @@ class LocalNotifier implements Notifier {
     }
     // Exact, so a reminder 30 minutes before isn't up to an hour late;
     // inexact where Android doesn't allow exact alarms.
-    final exact = await _android?.canScheduleExactNotifications() ?? false;
+    final exact = await exactAlarmsAllowed();
     for (final reminder in reminders) {
       final at = reminder.at;
       await _plugin.zonedSchedule(
@@ -317,6 +321,10 @@ class LocalNotifier implements Notifier {
   @override
   Future<bool> enabled() async =>
       await _android?.areNotificationsEnabled() ?? true;
+
+  @override
+  Future<bool> exactAlarmsAllowed() async =>
+      await _android?.canScheduleExactNotifications() ?? true;
 
   /// [channel] with [text] shown in full when the notification is pulled down.
   static AndroidNotificationDetails _withText(

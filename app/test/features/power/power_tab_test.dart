@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lanka_radar/app/theme.dart';
+import 'package:lanka_radar/core/alerts/alerts_repository.dart';
 import 'package:lanka_radar/core/data/database.dart';
 import 'package:lanka_radar/core/data/now_repository.dart';
 import 'package:lanka_radar/core/data/power_cuts.dart';
@@ -14,20 +15,28 @@ import 'package:lanka_radar/features/power/widgets/osm.dart';
 import 'package:lanka_radar/features/power/widgets/place_row.dart';
 
 import '../../helpers/fake_branch.dart';
+import '../../helpers/fake_notifier.dart';
 import '../../helpers/fake_sharing.dart';
 import '../../helpers/fake_sources.dart';
+import '../../helpers/fake_system_settings.dart';
 
 void main() {
   late AppDatabase database;
   late FakeSources sources;
   late NowRepository phone;
   late FakeSharing sharing;
+  late FakeNotifier notifier;
+  late AlertsRepository alerts;
+  late FakeSystemSettings settings;
 
   setUp(() {
     database = memoryDatabase();
     sources = FakeSources();
     phone = sources.repository(database);
     sharing = FakeSharing();
+    notifier = FakeNotifier();
+    alerts = fakeAlerts(database, notifier);
+    settings = FakeSystemSettings();
   });
 
   tearDown(() => database.close());
@@ -53,6 +62,7 @@ void main() {
       MultiRepositoryProvider(
         providers: [
           RepositoryProvider.value(value: phone),
+          RepositoryProvider.value(value: alerts),
           RepositoryProvider<Sharing>.value(value: sharing),
         ],
         child: NoMapTiles(
@@ -61,7 +71,7 @@ void main() {
             home: Scaffold(
               body: BlocProvider.value(
                 value: cubit,
-                child: PowerTab(locate: locate),
+                child: PowerTab(locate: locate, settings: settings),
               ),
             ),
           ),
@@ -140,6 +150,29 @@ void main() {
       expect(find.text('Breakdown since 09:24'), findsOneWidget);
     },
   );
+
+  testWidgets('the first place added offers on-time reminders, once', (
+    tester,
+  ) async {
+    notifier.exactAllowed = false;
+    await open(tester);
+    await tester.tap(button('Add a place'));
+    await settle(tester);
+    await tester.tap(find.text('Use my location'));
+    await settle(tester);
+    await pick(tester, 'Province', 'Western Province North');
+    await pick(tester, 'Area', 'Gampaha');
+    await tester.tap(button('Add place'));
+    await settle(tester);
+
+    expect(find.text('On-time reminders'), findsOneWidget);
+    await tester.tap(button('Allow'));
+    await settle(tester);
+
+    expect(find.text('On-time reminders'), findsNothing);
+    expect(settings.opened, ['alarms']);
+    expect(await tester.runAsync(alerts.offerAlarmsOnce), isFalse);
+  });
 
   testWidgets(
     'the map starts from the phone and takes the spot under the pin',

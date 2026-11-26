@@ -41,6 +41,10 @@ class HomeCubit extends Cubit<HomeState> {
 
   /// The power cuts the load shedding reminders were last set from.
   PowerNow? _reminded;
+
+  /// Whether exact alarms were allowed when the reminders were last set; null
+  /// before the first look.
+  bool? _exactAlarms;
   StreamSubscription<List<FeedItem>>? _items;
 
   /// Shows the stored items as they change, marks what arrived since the last
@@ -162,9 +166,13 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(nowCard: card, health: health));
     }
     // On screen, so it doesn't alert later; and the reminders follow any
-    // change, such as a place added.
+    // change, such as a place added, or exact alarms allowed in Android's
+    // settings (they come back here on resume).
     await _alerts.powerShown(card.power);
-    if (card.power != _reminded) {
+    final exact = await _alerts.notifier.exactAlarmsAllowed();
+    final alarmsChanged = _exactAlarms != null && exact != _exactAlarms;
+    _exactAlarms = exact;
+    if (card.power != _reminded || alarmsChanged) {
       _reminded = card.power;
       try {
         await _alerts.remindCuts(card.power, now: _now());

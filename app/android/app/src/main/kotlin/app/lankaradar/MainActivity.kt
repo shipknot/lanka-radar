@@ -12,7 +12,7 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        // The Alerts screen opens the app's pages in Android's settings.
+        // The app opens its own pages in Android's settings.
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "app.lankaradar/settings")
             .setMethodCallHandler { call, result ->
                 when (call.method) {
@@ -22,6 +22,10 @@ class MainActivity : FlutterActivity() {
                     }
                     "notifications" -> {
                         open(notificationSettings())
+                        result.success(null)
+                    }
+                    "alarms" -> {
+                        open(alarmSettings())
                         result.success(null)
                     }
                     else -> result.notImplemented()
@@ -36,6 +40,14 @@ class MainActivity : FlutterActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                 .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+        } else {
+            appInfo()
+        }
+
+    // Alarms & reminders, from Android 12; before it exact alarms need no page.
+    private fun alarmSettings() =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM, Uri.fromParts("package", packageName, null))
         } else {
             appInfo()
         }

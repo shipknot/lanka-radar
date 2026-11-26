@@ -16,23 +16,33 @@ class AlertsCubit extends Cubit<AlertsState> {
   final NowRepository _phone;
   final DateTime Function() _now;
 
-  /// Reads the switches, quiet hours, the last background sync and whether
-  /// notifications are allowed; again on coming back from Android's settings.
+  /// Reads the switches, quiet hours, the last background sync and what
+  /// Android allows; again on coming back from Android's settings.
   Future<void> load() async {
     final on = await _alerts.switchesOn();
     final quiet = await _alerts.quietHours();
     final lastSync = await _alerts.lastSync();
     final allowed = await _alerts.notifier.enabled();
-    if (!isClosed) {
-      emit(
-        AlertsState(
-          loaded: true,
-          on: on,
-          quiet: quiet,
-          lastSync: lastSync,
-          notificationsAllowed: allowed,
-        ),
-      );
+    final exact = await _alerts.notifier.exactAlarmsAllowed();
+    final power = await _phone.powerNow();
+    final alarmsChanged = state.loaded && exact != state.exactAlarmsAllowed;
+    if (isClosed) {
+      return;
+    }
+    emit(
+      AlertsState(
+        loaded: true,
+        on: on,
+        quiet: quiet,
+        lastSync: lastSync,
+        notificationsAllowed: allowed,
+        exactAlarmsAllowed: exact,
+        hasPlaces: power != null,
+      ),
+    );
+    if (alarmsChanged) {
+      // Back from Alarms & reminders: the reminders set again come on time.
+      await _alerts.remindCuts(power, now: _now());
     }
   }
 

@@ -8,23 +8,12 @@ import 'package:lanka_radar/core/alerts/alert_switches.dart';
 import 'package:lanka_radar/core/alerts/alerts_repository.dart';
 import 'package:lanka_radar/core/data/database.dart';
 import 'package:lanka_radar/core/format/dates.dart';
-import 'package:lanka_radar/core/system_settings.dart';
 import 'package:lanka_radar/features/alerts/view/alerts_page.dart';
 
 import '../../helpers/fake_branch.dart';
 import '../../helpers/fake_notifier.dart';
 import '../../helpers/fake_sources.dart';
-
-/// Records which of the app's settings pages would have opened.
-class FakeSystemSettings implements SystemSettings {
-  final opened = <String>[];
-
-  @override
-  Future<void> openApp() async => opened.add('app');
-
-  @override
-  Future<void> openNotifications() async => opened.add('notifications');
-}
+import '../../helpers/fake_system_settings.dart';
 
 void main() {
   late AppDatabase database;
@@ -170,6 +159,41 @@ void main() {
     await tester.tap(find.text('Notifications are off'));
 
     expect(settings.opened, ['notifications']);
+  });
+
+  testWidgets(
+    'says when reminders may be late, opens Alarms & reminders, and sets '
+    'them again once allowed',
+    (tester) async {
+      notifier.exactAllowed = false;
+      await tester.runAsync(
+        () => storePowerSetup(FakeSources().repository(database)),
+      );
+      await open(tester);
+
+      await tester.tap(find.text('Reminders may be late'));
+      expect(settings.opened, ['alarms']);
+
+      // Allowed in Android's settings, then back in the app.
+      notifier.exactAllowed = true;
+      final set = notifier.cutRemindersSet;
+      tester.binding
+        ..handleAppLifecycleStateChanged(AppLifecycleState.inactive)
+        ..handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+      await settle(tester);
+
+      expect(find.text('Reminders may be late'), findsNothing);
+      expect(notifier.cutRemindersSet, greaterThan(set));
+    },
+  );
+
+  testWidgets('without a place, late reminders are not mentioned', (
+    tester,
+  ) async {
+    notifier.exactAllowed = false;
+    await open(tester);
+
+    expect(find.text('Reminders may be late'), findsNothing);
   });
 
   testWidgets('the battery row shows the last sync and opens app info', (

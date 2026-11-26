@@ -666,6 +666,28 @@ Tamil name''');
       expect(notifier.permissionRequests, 1);
     });
 
+    test('offers on-time reminders once, when Android holds them', () async {
+      final notifier = FakeNotifier();
+      final alerts = fakeAlerts(database, notifier);
+      expect(await alerts.offerAlarmsOnce(), isFalse);
+
+      notifier.exactAllowed = false;
+      expect(await alerts.offerAlarmsOnce(), isTrue);
+      expect(await alerts.offerAlarmsOnce(), isFalse);
+    });
+
+    test(
+      'offers no on-time reminders with the Power cuts switch off',
+      () async {
+        final notifier = FakeNotifier()..exactAllowed = false;
+        final alerts = fakeAlerts(database, notifier);
+
+        await alerts.setSwitch(AlertSwitch.power, on: false);
+
+        expect(await alerts.offerAlarmsOnce(), isFalse);
+      },
+    );
+
     test('quiet hours start on, 22:00 to 06:00, and keep a change', () async {
       final alerts = fakeAlerts(database);
       expect(await alerts.quietHours(), const QuietHours());

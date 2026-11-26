@@ -20,6 +20,7 @@ class AlertsRepository {
 
   static const _inFrontSince = 'app.inFrontSince';
   static const _asked = 'alerts.permissionAsked';
+  static const _alarmsOffered = 'alerts.alarmsOffered';
   static const _held = 'alerts.held';
   static const _heldFuel = 'alerts.heldFuel';
   static const _powerSeen = 'alerts.powerSeen';
@@ -150,6 +151,19 @@ class AlertsRepository {
     }
     await _db.saveSetting(_asked, 'yes');
     await notifier.requestPermission();
+  }
+
+  /// Whether to offer on-time load shedding reminders now: once, when a place
+  /// is added, the Power cuts switch is on and Android doesn't allow exact
+  /// alarms (new installs from Android 14). After that, Alerts says so.
+  Future<bool> offerAlarmsOnce() async {
+    if (await _db.setting(_alarmsOffered) != null ||
+        !await _isOn(AlertSwitch.power) ||
+        await notifier.exactAlarmsAllowed()) {
+      return false;
+    }
+    await _db.saveSetting(_alarmsOffered, 'yes');
+    return true;
   }
 
   Future<bool> _isOn(AlertSwitch alert) async {
