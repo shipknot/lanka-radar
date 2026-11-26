@@ -7,6 +7,8 @@ final class AlertsState extends Equatable {
     this.quiet = const QuietHours(),
     this.lastSync,
     this.notificationsAllowed = true,
+    this.exactAlarmsAllowed = true,
+    this.hasPlaces = false,
   });
 
   /// False until the settings are first read.
@@ -22,6 +24,16 @@ final class AlertsState extends Equatable {
   /// Whether Android lets the app post notifications.
   final bool notificationsAllowed;
 
+  /// Whether Android lets the load shedding reminders come on time.
+  final bool exactAlarmsAllowed;
+
+  /// Whether a place is watched, so there are load shedding reminders to set.
+  final bool hasPlaces;
+
+  /// Load shedding reminders are set, but Android may hold them up to an hour.
+  bool get remindersMayBeLate =>
+      !exactAlarmsAllowed && hasPlaces && on.contains(AlertSwitch.power);
+
   AlertsState copyWith({Set<AlertSwitch>? on, QuietHours? quiet}) =>
       AlertsState(
         loaded: loaded,
@@ -29,6 +41,8 @@ final class AlertsState extends Equatable {
         quiet: quiet ?? this.quiet,
         lastSync: lastSync,
         notificationsAllowed: notificationsAllowed,
+        exactAlarmsAllowed: exactAlarmsAllowed,
+        hasPlaces: hasPlaces,
       );
 
   @override
@@ -38,5 +52,7 @@ final class AlertsState extends Equatable {
     quiet,
     lastSync,
     notificationsAllowed,
+    exactAlarmsAllowed,
+    hasPlaces,
   ];
 }

@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Reads the feed from GitHub. -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Alerts for new items (asked once, after the first sync). -->
@@ -9,12 +10,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <!-- Load shedding reminders go out 30 minutes before a slot, not up to an
-         hour late as inexact alarms may. Granted without asking: USE_EXACT_ALARM
-         from Android 13, SCHEDULE_EXACT_ALARM on Android 12. -->
-    <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
-    <uses-permission
-        android:name="android.permission.SCHEDULE_EXACT_ALARM"
-        android:maxSdkVersion="32"/>
+         hour late as inexact alarms may. Google Play keeps USE_EXACT_ALARM for
+         alarm clock and calendar apps, so this is Alarms & reminders: on by
+         itself on Android 12 and 13, off on new installs from Android 14 until
+         the user allows it (the app offers it after the first place). -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM"/>
 
     <application
         android:label="Lanka Radar"
@@ -76,6 +76,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/radar_widget" />
         </receiver>
+        <!-- geolocator's foreground service is for following the location in
+             the background; the app only reads one position while open, so it
+             goes, and Google Play asks for no foreground service declaration. -->
+        <service
+            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+            tools:node="remove" />
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

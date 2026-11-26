@@ -12,4 +12,7 @@ class SystemSettings {
   /// The app's notification settings.
   Future<void> openNotifications() =>
       _channel.invokeMethod<void>('notifications');
+
+  /// Alarms & reminders, which lets the load shedding reminders come on time.
+  Future<void> openAlarms() => _channel.invokeMethod<void>('alarms');
 }

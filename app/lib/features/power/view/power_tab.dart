@@ -7,11 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lanka_radar/app/motion.dart';
 import 'package:lanka_radar/app/segments.dart';
 import 'package:lanka_radar/app/share.dart';
+import 'package:lanka_radar/core/alerts/alerts_repository.dart';
 import 'package:lanka_radar/core/data/phone_sources.dart';
 import 'package:lanka_radar/core/data/power_cuts.dart';
 import 'package:lanka_radar/core/format/share_texts.dart';
 import 'package:lanka_radar/core/links.dart';
 import 'package:lanka_radar/core/location.dart';
+import 'package:lanka_radar/core/system_settings.dart';
 import 'package:lanka_radar/features/power/cubit/power_cubit.dart';
 import 'package:lanka_radar/features/power/hero_status.dart';
 import 'package:lanka_radar/features/power/view/place_page.dart';
@@ -25,11 +27,13 @@ class PowerTab extends StatelessWidget {
   const PowerTab({
     this.open = openExternally,
     this.locate = locatePhone,
+    this.settings = const SystemSettings(),
     super.key,
   });
 
   final OpenLink open;
   final Locate locate;
+  final SystemSettings settings;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,7 @@ class PowerTab extends StatelessWidget {
         final status = heroStatusFor(state, now: DateTime.now());
         final places = setup.places;
         void showOutcome(PlaceOutcome? outcome) =>
-            _showOutcome(context, cubit, outcome);
+            _showOutcome(context, cubit, settings, outcome);
         Widget editor(Place place, {required bool isNew}) =>
             PlacePage.editor(cubit, place, isNew: isNew, locate: locate);
         void addPlace() => unawaited(
@@ -161,10 +165,12 @@ class PowerTab extends StatelessWidget {
     ];
   }
 
-  /// A word on what just happened to a place, with Undo for a removal.
+  /// A word on what just happened to a place, with Undo for a removal; a new
+  /// place may also offer on-time reminders.
   static void _showOutcome(
     BuildContext context,
     PowerCubit cubit,
+    SystemSettings settings,
     PlaceOutcome? outcome,
   ) {
     if (outcome == null || !context.mounted) {
@@ -186,6 +192,44 @@ class PowerTab extends StatelessWidget {
         ),
       ),
     });
+    if (outcome case PlaceSaved(isNew: true)) {
+      unawaited(_offerAlarms(context, settings));
+    }
+  }
+
+  /// Once, after a place is added: without Alarms & reminders (off on new
+  /// installs from Android 14), Android may send a reminder up to an hour late.
+  static Future<void> _offerAlarms(
+    BuildContext context,
+    SystemSettings settings,
+  ) async {
+    if (!await context.read<AlertsRepository>().offerAlarmsOnce() ||
+        !context.mounted) {
+      return;
+    }
+    final allow = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        icon: const Icon(Icons.alarm_outlined),
+        title: const Text('On-time reminders'),
+        content: const Text(
+          'Allow alarms so load shedding reminders come 30 min before.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Not now'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Allow'),
+          ),
+        ],
+      ),
+    );
+    if (allow ?? false) {
+      await settings.openAlarms();
+    }
   }
 }
 

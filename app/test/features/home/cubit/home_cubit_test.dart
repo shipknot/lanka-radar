@@ -72,6 +72,22 @@ void main() {
   });
 
   test(
+    'load shedding reminders are set again once exact alarms are allowed',
+    () async {
+      await storePowerSetup(FakeSources().repository(database));
+      notifier.exactAllowed = false;
+      await cubit.watch();
+      final set = notifier.cutRemindersSet;
+
+      // Allowed in Android's settings, then back in the app.
+      notifier.exactAllowed = true;
+      await cubit.resume();
+
+      expect(notifier.cutRemindersSet, greaterThan(set));
+    },
+  );
+
+  test(
     'the home-screen widget gets the numbers, again only when they change',
     () async {
       await cubit.watch();

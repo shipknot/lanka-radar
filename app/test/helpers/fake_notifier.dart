@@ -13,14 +13,19 @@ class FakeNotifier implements Notifier {
   var permissionRequests = 0;
   var allowed = true;
 
+  /// Whether Android lets the app set exact alarms (Alarms & reminders).
+  var exactAllowed = true;
+
   /// The holiday reminders scheduled now.
   var reminders = <HolidayReminder>[];
 
   final powerAlerts = <PowerAlert>[];
   final weekly = <WeeklyAlert>[];
 
-  /// The load shedding reminders scheduled now.
+  /// The load shedding reminders scheduled now, and how many times they were
+  /// set.
   var cutReminders = <CutReminder>[];
+  var cutRemindersSet = 0;
 
   List<String> get shownIds => [
     for (final batch in shown)
@@ -46,14 +51,19 @@ class FakeNotifier implements Notifier {
       powerAlerts.addAll(alerts);
 
   @override
-  Future<void> scheduleCutReminders(List<CutReminder> reminders) async =>
-      cutReminders = reminders;
+  Future<void> scheduleCutReminders(List<CutReminder> reminders) async {
+    cutReminders = reminders;
+    cutRemindersSet++;
+  }
 
   @override
   Future<void> requestPermission() async => permissionRequests++;
 
   @override
   Future<bool> enabled() async => allowed;
+
+  @override
+  Future<bool> exactAlarmsAllowed() async => exactAllowed;
 }
 
 AlertsRepository fakeAlerts(AppDatabase database, [FakeNotifier? notifier]) =>

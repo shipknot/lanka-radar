@@ -1,13 +1,13 @@
 # Lanka Radar plan
 
-Living document, updated as work proceeds. Last updated: 2026-10-21.
-Status: **M0 to M10 built: the app is released (v0.17.0 the latest, a 31 MB arm64 APK) and in daily use. M11, the redesign, is under way (M11a built). Left: the rest of M11, and M7's two weeks of daily use, tuning topics and alerts; ideas for afterwards are under Later.**
+Living document, updated as work proceeds. Last updated: 2026-11-26.
+Status: **M0 to M10 built: the app is released (v0.18.1 the latest, a 31 MB arm64 APK) and in daily use. M11, the redesign, is half built (M11a). Next: M12, publishing on Google Play under ShipKnot, with the rest of M11 built during its closed test; ideas for afterwards are under Later.**
 
 A personal Android app that watches Sri Lankan official sources (gazettes, price controls, fuel, exchange rates, holidays, exam notices) and tells you when something new lands. GitHub Actions does most of the watching and the app reads what it publishes; the two sources that only answer inside Sri Lanka are read by the app itself.
 
 ## Decisions (2026-10-16, grilling session)
 
-- **Purpose:** personal side project, built in the open. For now it is only for you: nothing is posted anywhere.
+- **Purpose:** personal side project, built in the open. For now it is only for you: nothing is posted anywhere. (From M12, 2026-11-26, it is also published on Google Play; it still posts nothing anywhere.)
 - **Content (v1):** price controls and fuel (CAA price-control gazettes, CEYPETCO fuel, LP gas), daily-life extraordinary gazettes, holidays and USD/LKR rates, exam notices.
 - **USD/LKR:** the app reads CBSL's own site on the phone (the same-day official rate); the workflow keeps Frankfurter's copy as a backup.
 - **Sri Lanka-only sources (decided after the first GitHub run):** CEYPETCO's fuel prices and CBSL's rate search refuse GitHub's servers abroad, so the app fetches both on the phone during its sync. CBSL's same-day rate also makes the rare USD/LKR items, with the same IDs as the workflow's. Fuel makes no items on the phone (decided in the M5 grilling): fuel price changes arrive as fuel revision gazettes, which carry the old and new prices, and CEYPETCO's live prices fill the Now card.
@@ -91,13 +91,27 @@ A personal Android app that watches Sri Lankan official sources (gazettes, price
   - Every number shows where it came from: a sparkline or a change beside it, never a lone figure when there is history. Words only name things; the drawing says how much.
   - Details under "Redesign (M11)" in Design.
 
+- **Google Play (M12 grilling, 2026-11-26):**
+  - Published by ShipKnot, the personal Play developer account, as `app.lankaradar` (unchanged): free, with no ads, accounts or in-app purchases.
+  - Repo and data: the repo moves to the `shipknot` GitHub org, and the app reads the `data` branch from GitHub Pages (`https://shipknot.github.io/lanka-radar/`) instead of raw.githubusercontent.com, which isn't made for a public app's traffic (on mobile networks many phones share one address) and would put a personal account's name in every install. Pages is free, served from a CDN, and still only GitHub; the `data` branch (1,146 files, 7.5 MB) is well inside its limits. An installed app keeps the address it shipped with, so this lands before the first Play build. The same site serves the privacy page (`/privacy/`) and `switches.json`, since the project site owns `/lanka-radar/` on shipknot.github.io.
+  - One signing key: the release key becomes Play's app signing key (exported with Google's PEPK tool when the app is created), so the GitHub APKs carry on for phones without Google Play, and a phone moves between GitHub and Play without reinstalling. Both come from the same release, with the same version code.
+  - Countries: production in Sri Lanka only, since CEYPETCO, CBSL, HARTI and EDLCare answer only inside Sri Lanka and their sections would be empty abroad. The closed test is open in every country, so testers abroad can join. People abroad can use the GitHub APK.
+  - Exact alarms: Play allows `USE_EXACT_ALARM` only for alarm clock, timer and calendar apps, so the app declares `SCHEDULE_EXACT_ALARM` on every Android version instead. On new installs from Android 14 it is off until the user turns on Alarms & reminders. After the first place is saved, a prompt ("On-time reminders", Not now or Allow) opens that setting; until it is on, a "Reminders may be late" row at the top of Alerts opens it, like "Notifications are off". Reminders already fall back to inexact alarms and name the cut's time; they are set again when the app comes back from the setting.
+  - Government information (Play's rule for apps that show it): the full description lists each official source with its link and says "Lanka Radar is an independent app by ShipKnot. It is not affiliated with or endorsed by the Government of Sri Lanka or any of these sources." About says the same in one line, and the Government apps declaration answers No. No official emblem in the icon, screenshots or graphics.
+  - Remote off-switch: each sync reads `switches.json` first, and a phone source listed there (CEYPETCO, CBSL's rates, CBSL's price report, HARTI, EDLCare) isn't called; its section and its Sources row say "Paused", and it doesn't count as quiet. A missing or unreadable file pauses nothing. Pausing one is an edit to `site/switches.json` on `main`, published with the site, so every phone stops within about an hour without an app update.
+  - Store listing: title "Lanka Radar"; short description "Fuel and gas prices, power cuts, gazettes, jobs and holidays in Sri Lanka"; category Tools; target age 18 and over (outside the Families policy); content rating from the questionnaire. Screenshots of the redesigned tabs at store size, with real data for the tests' sample place (never the user's places), and a 1024 x 500 feature graphic from the README banner. The copy and graphics live in `docs/store/`.
+  - Data safety: no data collected or shared. Places, their points and "Use my location" stay on the phone; the app only downloads public data (the data site, the official sources, OpenStreetMap's tiles) and sends nothing about the user beyond what any download carries (EDLCare sees which load shedding groups are looked up). The privacy page says the same.
+  - Builds: the release workflow also builds an AAB with the same version and key and attaches it to the release; it is uploaded to Play by hand. geolocator's location foreground service (unused: the app asks for one position at a time) comes out of the manifest, so Play doesn't ask for a foreground service declaration; WorkManager's short service needs none. Versions stay automatic (no forced 1.0.0).
+  - Order: the Play blockers first (permissions, the AAB, the data site), then the closed test (12 or more testers for 14 days: a testing community plus friends and family in Sri Lanka). The off-switch and M11b ship as test updates; then production access and a full rollout in Sri Lanka.
+  - Accepted risk: with public traffic a phone source may block the app or change; the off-switch limits the harm, and its section says Paused until it is fixed.
+
 ### Defaults (accepted 2026-10-16)
 
-- Public repo under ThivaaVipul, MIT license. Scraped data is committed to a separate `data` branch, so `main` holds only code.
+- Public repo under ThivaaVipul (moving to the `shipknot` org in M12), MIT license. Scraped data is committed to a separate `data` branch, so `main` holds only code.
 - Scrapers run every hour (every 3 hours until M8a). The app checks about every hour, plus pull to refresh, and stays silent from 22:00 to 06:00 (anything new arrives in the morning).
 - History is loaded from 1 January 2026.
 - Flutter with one Cubit per screen, like Zen Mode, and an offline copy you can search.
-- GitHub Actions builds the signed APK; you install it from GitHub Releases. No Play Store.
+- GitHub Actions builds the signed APK; you install it from GitHub Releases. No Play Store. (From M12 also on Google Play in Sri Lanka, signed with the same key.)
 - Each source records its last successful run. The app flags a source that has gone quiet, and GitHub emails you when a run fails.
 - Nothing git-related happens without your OK at each step. Commits end with Claude's `Co-Authored-By` line (since 2026-10-16; earlier ones have none).
 - Git identity `ThivaaVipul` with the GitHub noreply email only (set in this repo's git config, since the repo is public); no `gh` or browser tools for GitHub.
@@ -109,7 +123,7 @@ A personal Android app that watches Sri Lankan official sources (gazettes, price
 - Every push to `main` that ships a change publishes a release. The version comes from the commits since the last `v*` tag: `feat` is minor, `fix`, `perf` and `revert` are patch, `!` or `BREAKING CHANGE:` is major. Other types don't release.
 - The first release is `app/pubspec.yaml`'s 0.1.0, once a `feat` or `fix` lands. A higher pubspec version wins, so a version can be forced by hand.
 - Android version code: `major * 1000000 + minor * 1000 + patch`.
-- Each release has the signed APK and `SHA256SUMS.txt`. One signing key, kept in four repository secrets; until they exist, a due release is skipped with a warning.
+- Each release has the signed APK and `SHA256SUMS.txt` (from M12 also the AAB for Google Play). One signing key, kept in four repository secrets; until they exist, a due release is skipped with a warning.
 - The `data` branch belongs to the scrape workflow, and `v*` tags come only from the release workflow.
 
 ## Sources (checked live on 2026-10-16)
@@ -277,7 +291,7 @@ Three pull requests, each with its tests:
 - [x] Create the signing key and add the four repository secrets (you, once; docs/DEVELOPMENT.md has the steps)
 - [x] First release installed from GitHub Releases (v0.1.0), and an update installs over it (v0.2.0)
 - [x] An app icon: a radar sweep, as an adaptive icon with a themed-icon layer, and the same radar as the notification icon
-- [ ] Two weeks of daily use; tune topics and alerts
+- [x] Two weeks of daily use, from 2026-10-21; tune topics and alerts
 
 ### M8: Redesign and more sources
 
@@ -320,9 +334,22 @@ On the branch `feat/ui-redesign`, each step with its tests, after the user had s
 - [ ] M11b, the rest: the item page, the chart page, the quiet hours dial, Offline PDFs, Search and About; numbers that roll, pings and the radar pull to refresh
 - [ ] M11c, checked on the phone in both modes, with animations on and off
 
+### M12: Google Play
+
+Published by ShipKnot in Sri Lanka; the decisions are under "Google Play (M12 grilling)". Steps marked "(you)" happen in GitHub's or Play Console's settings; the others are pull requests, each with its tests.
+
+- [ ] M12a (you): transfer the repo to the `shipknot` org, then set Settings > Pages > Source to GitHub Actions
+- [x] M12b, Play's permission rules: `SCHEDULE_EXACT_ALARM` instead of `USE_EXACT_ALARM`, the "On-time reminders" prompt after the first place, the "Reminders may be late" row in Alerts, reminders set again when the setting changes; geolocator's unused location service removed from the manifest
+- [ ] M12c, the AAB: the release workflow also builds `lanka-radar-<version>.aab` (same version and key) and attaches it to the release
+- [ ] M12d, the data site (after M12a): a Pages workflow publishing the `data` branch with `site/` (the privacy page, `switches.json`) after every scrape and every change to `site/`; the app reads `shipknot.github.io/lanka-radar`; the user agents (app and scrapers), About, README, CLAUDE.md and DEVELOPMENT.md name `shipknot/lanka-radar`; About's independence line. Its release is the first Play build
+- [ ] M12e, the store listing in `docs/store/`: the descriptions, the release notes, the 512 px icon, the feature graphic and the screenshots
+- [ ] M12f (you, with steps from me): the app in Play Console with Play App Signing on the existing key (PEPK), the store listing, App content (privacy policy, ads, app access, content rating, target audience, Data safety, government apps, news), the closed test in every country with the testers' groups, the first AAB sent for review
+- [ ] M12g, during the 14 days: the remote off-switch, then M11b and M11c, each as a test update; screenshots taken again after M11b
+- [ ] M12h (you): production access applied for once 12 or more testers have been in for 14 days, then production in Sri Lanka at full rollout; afterwards the README's install section gets the Play link beside the APK, and the ShipKnot site a card
+
 ## Open questions
 
-None right now.
+- Play words its closed-test rule per app (12 or more testers for 14 days). The new app's Dashboard will say whether it applies to this one; the plan assumes it does.
 
 ## Later
 
@@ -395,3 +422,5 @@ None right now.
 | 2026-10-21 | M11 planned (the user skipped grilling: "straight to planning"), on a local branch only. Every screen was rendered first with the phone's data to see where it stands: Prices is four screens long, Notices repeats a badge on every row, Today's numbers have no history beside them, Sources has a check on every row. The marker colours were checked for colour blindness (all pairs, both modes): the brand teal is too grey for a marker and the dark teal and ochre too light, so markers get their own steps. |
 | 2026-10-21 | M11a: the kit and the main screens. Previews were rendered from the app's code with the same data before and after (the data branch and the phone's sources read from Sri Lanka, the tests' sample place for power), with GIFs of the motion, then tried on the phone. Settled while building: Today's numbers are one 2 by 2 block, each with its history (fuel a step line for the year, USD/LKR its 30 days, the holiday a ring that fills over the month before it), and This week lists what its markers are, a day's cuts on one line ("Load shedding at Home and Work"); a wholesale row shows the change in the middle of its range instead of the range before, on a track from the cheapest centre to the dearest that day, with a key; market bars are full at a 30% change; Notices has a heading per day on a rail, its rows drop the date the heading gives, and each weekly gazette folds into one row that opens its notices; the calendar's month grows to six weeks without cutting a row; the Power strips show today, and tomorrow when it has a cut, once a place has its group; Sources places each source at the square root of its share of a day (rings at an hour, six hours and a day) and keeps "Last try failed". The sweep turns only while refreshing and on Sources, and everything holds still with animations off (the tests run that way). |
 | 2026-11-09 | Two small fixes, seen while rendering screenshots for the README. The calendar's day panel in Dates listed each application closing that day on its own line ("Applications close" six times); it now counts them into one ("6 applications close"), as Today's week strip does, through one `daySummary` for both. USD/LKR's week move showed "0.0%" with an arrow when the rate barely moved; a move under 0.05% is now no move, so Today, Prices, the widget and shared text show none. |
+| 2026-11-26 | M12 grilled; the decisions are under "Google Play (M12 grilling)". Checked first: the v0.18.1 APK's native libraries (Flutter, PDFium, SQLite) are all aligned for 16 KB pages, the app targets API 36 (Flutter 3.44's default), it has no self-update code, and no app on Play is named Lanka Radar. Two things Play would stop: `USE_EXACT_ALARM`, allowed only for alarm clock, timer and calendar apps, and geolocator's location foreground service, which would need a foreground service declaration (WorkManager's short service needs none). The phone's requests carry nothing about the user but the load shedding groups it looks up. The `data` branch is 1,146 files, 7.5 MB, and nothing in it names the repo's owner. M7's two weeks of daily use are done (from 2026-10-21). |
+| 2026-11-26 | M12b: the manifest declares `SCHEDULE_EXACT_ALARM` on every Android version instead of `USE_EXACT_ALARM`, and removes geolocator's foreground location service (`tools:node="remove"`): the app only calls `getCurrentPosition`, which doesn't use it, and the plugin's bind to the missing service just fails. Saving a new place offers "On-time reminders" once (`alerts.alarmsOffered`), when the Power cuts switch is on and Android doesn't allow exact alarms; Allow opens Alarms & reminders through MainActivity's settings channel. Alerts shows "Reminders may be late" at the top while exact alarms are off, a place is watched and Power cuts is on. Coming back to the app, Home and Alerts set the reminders again when the permission changed. |
