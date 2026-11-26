@@ -9,7 +9,7 @@
       "issuer": "Central Bank of Sri Lanka",
       "headline": {
         "en": "Central Bank of Sri Lanka - Rule on Reserve Requirement",
-        "ta": null
+        "ta": "2023 ஆம் ஆண்டின் 16 ஆம் இலக்க, இலங்கை மத்திய வங்கிச் சட்டம்"
       },
       "keyNumbers": [],
       "published": "2026-11-20",
@@ -17,14 +17,16 @@
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048556%20(E)%20NEW_1795607959.pdf",
-        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048556%20(S)_1795607952.pdf"
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048556%20(S)_1795607952.pdf",
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G%2048556%20(T)%20I-I%20Central%20Bank_1795689637.pdf"
       },
       "data": {
         "number": "2515/29",
         "group": "prices-taxes",
         "languages": [
           "en",
-          "si"
+          "si",
+          "ta"
         ],
         "title": "CENTRAL BANK OF SRI LANKA ACT, No. 16 OF 2023"
       },
@@ -464,7 +466,7 @@
       "topic": "gazettes",
       "issuer": "Election Commission",
       "headline": {
-        "en": "Election Commission",
+        "en": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE WELIMADA PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)",
         "ta": "(262 ஆம் அத்தியாயமான) உள்ளூர் அதிகார சபைகள் தேர்தல்கள் கட்டளைச் சட்டத்தின் 66அ(1)(ஆ) ஆம் பிரிவின் கீழ் வெலிமடை பிரதேச சபையின் உறுப்பினர் ஒருவரின் பதவியிலான வெற்றிடத்தை நிரப்புதல்"
       },
       "keyNumbers": [],
@@ -472,6 +474,7 @@
       "effective": null,
       "links": {
         "page": "https://documents.gov.lk/web/extra_gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208159%20(E)_1795689718.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208159%20(S)_1795430913.pdf",
         "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208159%20(T)_1795604999.pdf"
       },
@@ -479,9 +482,11 @@
         "number": "2515/06",
         "group": "elections",
         "languages": [
+          "en",
           "si",
           "ta"
-        ]
+        ],
+        "title": "FILLING OF A VACANCY IN THE OFFICE OF MEMBER OF THE WELIMADA PRADESHIYA SABHA UNDER SECTION 66A(1)(b) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262)"
       },
       "alert": true
     },
@@ -827,7 +832,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -854,7 +859,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -881,7 +886,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -908,7 +913,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -935,7 +940,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -962,7 +967,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -989,7 +994,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -1016,7 +1021,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -1043,7 +1048,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
@@ -1070,7 +1075,7 @@
         "page": "https://documents.gov.lk/web/gazettes",
         "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II(A)%20-%20(13.11.2026)%20-%20Press%20(E)_1795605021.pdf",
         "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/2026.11.13%20Part%20I-II%20A%20(S)%20full%20tem._1794887630.pdf",
-        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20Tem.%20Online_1794827220.pdf"
+        "pdf_ta": "https://documents.gov.lk/api/content-file-proxy?file=/gazette-content/I-II%20A%20(T)%2013.11.2026%20NEW%20B%2082848%20Tempery%20PDF_1795689541.pdf"
       },
       "data": {
         "week": "2026-11-13",
