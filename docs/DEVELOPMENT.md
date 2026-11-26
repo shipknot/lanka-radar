@@ -91,7 +91,7 @@ Every push to `main` that ships a change publishes a release (`.github/workflows
 - Only commits that change `app/` count, so scraper and tooling work never publishes an app release.
 - The first release uses the version in `app/pubspec.yaml` once there is a `feat` or `fix` to ship. A pubspec version above the computed one wins, so a version can still be forced by hand.
 - The Android version code is `major * 1000000 + minor * 1000 + patch`, so it always grows.
-- Each release carries the signed `lanka-radar-X.Y.Z.apk` (for 64-bit ARM phones) and `SHA256SUMS.txt`. Notes come from `CHANGELOG.md` when it has a section for the version, otherwise from the commits.
+- Each release carries the signed `lanka-radar-X.Y.Z.apk` (for 64-bit ARM phones), `lanka-radar-X.Y.Z.aab` (the bundle for Google Play, every CPU type, uploaded there by hand) and `SHA256SUMS.txt`. Both are signed with the same key and carry the same version code, so a phone can move between them without reinstalling. Notes come from `CHANGELOG.md` when it has a section for the version, otherwise from the commits.
 
 ### Signing key (one time)
 
