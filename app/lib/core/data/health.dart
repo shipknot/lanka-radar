@@ -22,6 +22,7 @@ final class SourceHealth extends Equatable {
     this.lastSuccess,
     this.lastError,
     this.onPhone = false,
+    this.paused = false,
   });
 
   final String name;
@@ -35,19 +36,31 @@ final class SourceHealth extends Equatable {
   /// one that has never answered may just be out of reach (a phone abroad).
   final bool onPhone;
 
+  /// Left alone on purpose, by the data site's `switches.json`.
+  final bool paused;
+
   /// Never answered on this phone, which only a phone source is let off for.
-  bool get notReached => onPhone && lastRun != null && lastSuccess == null;
+  bool get notReached =>
+      onPhone && !paused && lastRun != null && lastSuccess == null;
 
   /// Tried, but no success for a day or more; a phone source only once it has
-  /// answered here.
+  /// answered here. A paused source is never stale.
   bool isStale(DateTime now) =>
+      !paused &&
       lastRun != null &&
       (lastSuccess == null
           ? !onPhone
           : now.difference(lastSuccess!) > staleAfter);
 
   @override
-  List<Object?> get props => [name, lastRun, lastSuccess, lastError, onPhone];
+  List<Object?> get props => [
+    name,
+    lastRun,
+    lastSuccess,
+    lastError,
+    onPhone,
+    paused,
+  ];
 }
 
 /// The health of every source: what GitHub's workflow reads (and when it last

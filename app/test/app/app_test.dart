@@ -58,6 +58,7 @@ void main() {
     WidgetTester tester, {
     NotificationRouter? router,
     DateTime Function()? clock,
+    String? switches,
   }) async {
     // As with Android's "Remove animations": Power's rings stay still, so the
     // screens settle.
@@ -65,7 +66,10 @@ void main() {
         const FakeAccessibilityFeatures(disableAnimations: true);
     addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
     final feed = FeedRepository(database: database, remote: remote.branch);
-    final now = FakeSources().repository(database, now: clock);
+    final now = (FakeSources()..switches = switches).repository(
+      database,
+      now: clock,
+    );
     await tester.pumpWidget(
       // Map tiles come from the network, which tests don't reach.
       NoMapTiles(
@@ -388,6 +392,21 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Samba'), findsOneWidget);
     expect(find.text('Beans'), findsNothing);
+  });
+
+  testWidgets('a paused source shows what it had, saying it is paused', (
+    tester,
+  ) async {
+    await tester.runAsync(() => storeMarketPrices(database));
+    await open(tester, switches: '{"paused": ["cbsl-market"]}');
+    await showTab(tester, HomeTab.prices);
+
+    await tester.scrollUntilVisible(
+      find.text('Beans'),
+      200,
+      scrollable: page(),
+    );
+    expect(find.textContaining(', paused'), findsOneWidget);
   });
 
   testWidgets('a card opens its item', (tester) async {

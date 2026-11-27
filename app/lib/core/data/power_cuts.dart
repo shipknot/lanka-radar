@@ -393,12 +393,16 @@ final class PlaceCuts extends Equatable {
 
 /// The power cuts at each place set up, from each area's last listing.
 final class PowerNow extends Equatable {
-  const PowerNow({this.places = const [], this.checked});
+  const PowerNow({this.places = const [], this.checked, this.paused = false});
 
   final List<PlaceCuts> places;
 
   /// When EDLCare last answered.
   final DateTime? checked;
+
+  /// EDLCare is paused by the data site's `switches.json`: what shows is its
+  /// last listing.
+  final bool paused;
 
   /// The places with a cut.
   List<PlaceCuts> get cut => [
@@ -407,7 +411,7 @@ final class PowerNow extends Equatable {
   ];
 
   @override
-  List<Object?> get props => [places, checked];
+  List<Object?> get props => [places, checked, paused];
 }
 
 /// The cuts to come at every place, soonest first; with [before], only

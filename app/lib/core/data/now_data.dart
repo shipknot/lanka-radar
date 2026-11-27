@@ -89,6 +89,7 @@ final class NowData extends Equatable {
     this.market = const MarketPrices(),
     this.wholesale = const WholesalePrices(),
     this.power,
+    this.paused = const {},
   });
 
   final List<FuelNow> fuel;
@@ -128,6 +129,10 @@ final class NowData extends Equatable {
   /// Power cuts at the places watched; null until a place is set.
   final PowerNow? power;
 
+  /// The phone's sources the data site's `switches.json` pauses, by status
+  /// name: their sections show what was read before they were paused.
+  final Set<String> paused;
+
   /// The day the newest fuel price started.
   DateTime? get fuelChanged => fuel.isEmpty
       ? null
@@ -148,6 +153,7 @@ final class NowData extends Equatable {
     market,
     wholesale,
     power,
+    paused,
   ];
 }
 
@@ -167,6 +173,7 @@ NowData buildNow({
   WholesalePrices wholesale = const WholesalePrices(),
   PowerNow? power,
   String? laugfs,
+  Set<String> paused = const {},
 }) {
   final gazettes = _fuelGazettes(items);
   final fromGazette = fuelRows.isEmpty && gazettes.isNotEmpty;
@@ -193,6 +200,7 @@ NowData buildNow({
     market: market,
     wholesale: wholesale,
     power: power,
+    paused: paused,
   );
 }
 

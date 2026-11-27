@@ -151,4 +151,22 @@ void main() {
 
     expect(hero.live, isFalse);
   });
+
+  test('paused, it says so in place of when it looked', () {
+    final hero = heroStatusFor(
+      PowerState(
+        setup: const PowerSetup(places: [home]),
+        check: PowerCheck.done,
+        power: PowerNow(
+          places: const [PlaceCuts(place: home, outages: [])],
+          checked: checked,
+          paused: true,
+        ),
+      ),
+      now: now,
+    );
+
+    expect(hero.checked, 'Paused');
+    expect(hero.live, isFalse);
+  });
 }
