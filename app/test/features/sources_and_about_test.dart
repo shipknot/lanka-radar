@@ -33,11 +33,18 @@ void main() {
     }
   }
 
-  testWidgets('Sources lists what GitHub and the phone read, with failures', (
-    tester,
-  ) async {
+  testWidgets('Sources lists what GitHub and the phone read, with failures and '
+      'a paused source', (tester) async {
     final checked = DateTime.now().toUtc().toIso8601String();
     await tester.runAsync(() async {
+      // Read on an earlier sync; offline now, that copy stands.
+      await database.saveFile(
+        FileRow(
+          path: 'switches.json',
+          body: '{"paused": ["psc"]}',
+          fetchedAt: DateTime.now(),
+        ),
+      );
       await database.saveFile(
         FileRow(
           path: 'status.json',
@@ -81,9 +88,10 @@ void main() {
     expect(find.text('Wholesale prices'), findsOneWidget);
     expect(find.text('Jobs (PSC)'), findsOneWidget);
     // Out of reach of a test, as of a phone abroad: not reached, not quiet.
-    expect(find.textContaining('Not reached yet'), findsNWidgets(5));
+    expect(find.textContaining('Not reached yet'), findsNWidgets(4));
     expect(find.textContaining('Never answered'), findsNothing);
-    expect(find.textContaining('Last try failed'), findsNWidgets(5));
+    expect(find.textContaining('Last try failed'), findsNWidgets(4));
+    expect(find.text('Paused'), findsOneWidget);
   });
 
   testWidgets('About says who makes the app, and opens its code and privacy '

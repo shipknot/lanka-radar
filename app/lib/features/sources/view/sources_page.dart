@@ -59,7 +59,7 @@ class _SourcesPageState extends State<SourcesPage> {
                 Blip(
                   turn: from + (index + 0.5) / sources.length * 0.46,
                   distance: _distance(source, now),
-                  color: source.notReached
+                  color: source.paused || source.notReached
                       ? colors.outline
                       : _quiet(source, now)
                       ? colors.tertiary
@@ -112,9 +112,11 @@ class _SourcesPageState extends State<SourcesPage> {
       setState(() => _picked = _picked == name ? null : name);
 }
 
-/// Gone quiet, or never answered; a phone source not reached yet is neither.
+/// Gone quiet, or never answered; a paused source, or a phone source not
+/// reached yet, is neither.
 bool _quiet(SourceHealth source, DateTime now) =>
-    source.isStale(now) || (source.lastSuccess == null && !source.notReached);
+    !source.paused &&
+    (source.isStale(now) || (source.lastSuccess == null && !source.notReached));
 
 /// The radar itself, with the rings' ages along its twelve o'clock line.
 class _Scope extends StatelessWidget {
@@ -240,8 +242,11 @@ class _SourceRow extends StatelessWidget {
     final colors = theme.colorScheme;
     final quiet = _quiet(source, now);
     final success = source.lastSuccess;
-    final error = source.lastError;
-    final when = source.lastRun == null
+    // Paused, its last error is old news.
+    final error = source.paused ? null : source.lastError;
+    final when = source.paused
+        ? 'Paused'
+        : source.lastRun == null
         ? 'Not checked'
         : source.notReached
         ? 'Not reached yet'

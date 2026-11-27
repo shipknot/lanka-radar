@@ -13,6 +13,7 @@ import 'package:lanka_radar/core/data/gas_prices.dart';
 import 'package:lanka_radar/core/data/harti_bulletin.dart';
 import 'package:lanka_radar/core/data/market_prices.dart';
 import 'package:lanka_radar/core/data/now_data.dart';
+import 'package:lanka_radar/core/data/now_repository.dart';
 import 'package:lanka_radar/core/data/phone_sources.dart';
 import 'package:lanka_radar/core/data/price_history.dart';
 import 'package:lanka_radar/core/data/wholesale_prices.dart';
@@ -161,6 +162,10 @@ class _PricesTabState extends State<PricesTab> {
                           title: 'Fuel',
                           note: now.fuelFromGazette
                               ? fuelNote(now, today: today)
+                              : now.paused.contains(
+                                  NowRepository.ceypetcoSource,
+                                )
+                              ? 'CEYPETCO, paused'
                               : 'CEYPETCO, ${fuelNote(now, today: today)}',
                           children: [
                             if (now.fuel.isEmpty)
@@ -197,6 +202,8 @@ class _PricesTabState extends State<PricesTab> {
                           title: 'USD/LKR',
                           note: now.ratesFromBackup
                               ? 'backup copy'
+                              : now.paused.contains(NowRepository.cbslSource)
+                              ? 'Central Bank, paused'
                               : 'Central Bank',
                           children: [
                             if (now.rates.isEmpty)
@@ -228,6 +235,9 @@ class _PricesTabState extends State<PricesTab> {
                         3,
                         _MarketSection(
                           market: now.market,
+                          paused: now.paused.contains(
+                            NowRepository.marketSource,
+                          ),
                           today: today,
                           onChart: (name) => chart(MarketChart(name)),
                         ),
@@ -236,6 +246,9 @@ class _PricesTabState extends State<PricesTab> {
                         4,
                         _WholesaleSection(
                           wholesale: now.wholesale,
+                          paused: now.paused.contains(
+                            NowRepository.wholesaleSource,
+                          ),
                           centre: state.wholesaleCentre,
                           today: today,
                           onChart: (name, market) =>
@@ -564,9 +577,13 @@ class _MarketSection extends StatefulWidget {
     required this.market,
     required this.today,
     required this.onChart,
+    this.paused = false,
   });
 
   final MarketPrices market;
+
+  /// The price report is paused: its note says so in place of the date.
+  final bool paused;
   final DateTime today;
   final ValueChanged<String> onChart;
 
@@ -594,7 +611,9 @@ class _MarketSectionState extends State<_MarketSection> {
     final shown = sections.contains(_section) ? _section : sections.first;
     return Section(
       title: 'Market',
-      note: '${marketOrder.first}, ${cardDate(latest, today: widget.today)}',
+      note:
+          '${marketOrder.first}, '
+          '${widget.paused ? 'paused' : cardDate(latest, today: widget.today)}',
       children: [
         Padding(
           padding: const EdgeInsets.only(top: 4),
@@ -653,9 +672,14 @@ class _WholesaleSection extends StatefulWidget {
     required this.centre,
     required this.today,
     required this.onChart,
+    this.paused = false,
   });
 
   final WholesalePrices wholesale;
+
+  /// HARTI is paused: the note and the centre's button say so in place of
+  /// the date.
+  final bool paused;
   final String centre;
   final DateTime today;
   final void Function(String name, String market) onChart;
@@ -687,7 +711,9 @@ class _WholesaleSectionState extends State<_WholesaleSection> {
     final shown = groups.contains(_group) ? _group : groups.first;
     final vegetables = shown == 'Vegetables';
     final quotes = widget.wholesale.quotes(shown, centre: widget.centre);
-    final day = cardDate(latest, today: widget.today);
+    final day = widget.paused
+        ? 'paused'
+        : cardDate(latest, today: widget.today);
     return Section(
       title: 'Wholesale',
       // Where and when, as Market's "Narahenpita, 20 Oct"; the centre is

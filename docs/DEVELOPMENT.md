@@ -46,7 +46,7 @@ CI (`.github/workflows/ci.yml`) runs all of these on every push to `main` and ev
 scrapers/          Python package that reads the sources (runs on GitHub Actions)
 app/               Flutter app, Android only
 scripts/release/   works out the next version and release notes
-site/              pages published with the data on GitHub Pages (the privacy policy)
+site/              published with the data on GitHub Pages: the front page, the privacy policy, switches.json
 docs/              plan, this guide, the README's images
 ```
 
@@ -65,13 +65,25 @@ The scrape workflow (`.github/workflows/scrape.yml`) runs every hour and commits
 | `status.json` | each source's last run, last success and last error |
 | `state/<name>.json` | the scrapers' own bookkeeping, not for the app |
 
-The Pages workflow (`.github/workflows/pages.yml`) publishes the `data` branch, with the pages in `site/` (the privacy policy), at https://shipknot.github.io/lanka-radar/ after each successful scrape and on changes to `site/`. It only reads the branch, and the app reads the data from there.
+The Pages workflow (`.github/workflows/pages.yml`) publishes the `data` branch, with the files in `site/` (the front page, the privacy policy and `switches.json`), at https://shipknot.github.io/lanka-radar/ after each successful scrape and on changes to `site/`. It only reads the branch, and the app reads the data from there.
 
 Feed items are news: a gazette (fuel price revisions included), a USD/LKR move of 2% or more in a week, an exam notice. Gazettes become items only when they belong to a daily-life group: prices, taxes and imports; energy and utilities; wages and labour; elections. Exam notices become items for school exams (O/L, A/L, Grade 5 scholarship, GIT) and the department's own press releases and notices; a timetable's exam days, read once from its PDF, go in its data as `days`. The weekly gazette's Part I (IIA) brings one item per vacancy (under jobs) and per examination notice (under exams), with its page in the PDF and the closing date for applications. A new Litro price list is an item too, its prices read off the list's image with OCR (Tesseract, on GitHub's runner) for every district and cylinder size. Laugfs's price list is a table on its site: its current prices are a dataset, and a change becomes an item.
 
 Each gazette item's PDFs are read once: the title on page 1 becomes the headline when the list only names the issuer, and in price gazettes (CAA orders, fuel revisions) the price table becomes key numbers. The English PDF's first 10 pages are kept as text (`texts/`, by month) so the app can search inside gazettes. Tamil titles come from an old Bamini-encoded font, converted to Unicode with Open-Tamil, or from Arial Unicode MS, whose text in these PDFs is scrambled, so it is read from the glyph IDs instead.
 
 CEYPETCO's fuel prices, CBSL's rate search and CBSL's Daily Price Report only answer inside Sri Lanka, so the workflow (on GitHub's servers abroad) can't read them. The app reads them on the phone during its sync: the fuel prices fill its Now card (fuel price changes reach the feed as fuel revision gazettes), the same-day USD/LKR rate makes the same rate items, with the same IDs, as the workflow's backup copy, so a copy from either side is recognized, and each weekday's price report (a PDF, read with PDFium) adds the retail prices of everyday food at Pettah, Dambulla, Narahenpita and Negombo to the Prices tab. HARTI's daily bulletin (also a PDF, also out of reach from GitHub) adds the wholesale prices of vegetables at ten economic centres and of rice and dried foods at Pettah. The Public Service Commission's homepage has refused servers abroad since November 2026, so the phone reads it too, every six hours at most: its recruitments become the same `jobs-psc-<seconds>` items the workflow made, and those it had already published stay as they are. A source that fails 3 runs in a row fails the workflow once, so GitHub emails you; after that its failures are only recorded in `status.json`, and the app flags the source. A source the phone reads is flagged only once it has answered on that phone, since a phone abroad never reaches any of them.
+
+### Pausing a source the phone reads
+
+If a source the phone reads misbehaves at scale, or its site asks for fewer requests, every phone can be told to leave it alone without an app update. Add its name to `site/switches.json` and merge that to `main`:
+
+```json
+{
+  "paused": ["edlcare"]
+}
+```
+
+The names are `ceypetco` (fuel prices), `cbsl` (USD/LKR), `cbsl-market` (the price report), `harti` (wholesale prices), `edlcare` (power cuts) and `psc` (jobs). The Pages workflow publishes the file, each phone reads it at the start of its next sync (within about an hour), and the paused source isn't called: its section keeps what it had and says "paused", its row on Sources says "Paused", and it raises no warning. Take the name out to resume. A missing or unreadable file pauses nothing; a phone that can't reach the data site keeps the copy it read last.
 
 ## Git workflow
 

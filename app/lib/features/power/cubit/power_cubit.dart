@@ -113,10 +113,14 @@ class PowerCubit extends Cubit<PowerState> {
     if (isClosed) {
       return;
     }
+    // Paused, EDLCare wasn't asked: its last error is old news.
+    final paused = power?.paused ?? false;
     emit(
       state.copyWith(
         power: () => power,
-        check: status.lastError == null ? PowerCheck.done : PowerCheck.failed,
+        check: paused || status.lastError == null
+            ? PowerCheck.done
+            : PowerCheck.failed,
       ),
     );
     // Finding a new place's load shedding group can take a while, so the

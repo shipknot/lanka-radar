@@ -342,6 +342,10 @@ class AppDatabase extends _$AppDatabase {
 
   Future<void> saveFile(FileRow row) => into(files).insertOnConflictUpdate(row);
 
+  /// Forgets the file at [path] (saving one without a body would keep the old).
+  Future<void> dropFile(String path) =>
+      (delete(files)..where((row) => row.path.equals(path))).go();
+
   /// The hash each stored month had in the index, by month (yyyy-MM).
   Future<Map<String, String>> monthHashes() async {
     final rows = await (select(

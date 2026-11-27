@@ -309,6 +309,65 @@ void main() {
     });
   });
 
+  group('the remote off-switch', () {
+    test('a paused source is not called; it shows what it had, paused, and '
+        'never goes quiet', () async {
+      await phone.refresh();
+      sources.switches = '{"paused": ["ceypetco"]}';
+      sources.requests.clear();
+      now = now.add(const Duration(days: 2));
+
+      await phone.refresh();
+
+      expect(sources.requests, isNot(contains('api.ceypetco.gov.lk')));
+      expect(sources.requests, contains('www.cbsl.gov.lk'));
+      final card = await phone.load(const []);
+      expect(card.fuel, hasLength(6));
+      expect(card.paused, {NowRepository.ceypetcoSource});
+      final fuel = (await phone.health()).phone.first;
+      expect(fuel.name, 'Fuel prices');
+      expect(fuel.paused, isTrue);
+      expect(fuel.isStale(now), isFalse);
+    });
+
+    test('is read before the sources; when the site is out of reach the last '
+        'copy stands, and when it has none nothing is paused', () async {
+      // The price report shares CBSL's host, so the rates' own status tells.
+      Future<DateTime?> ratesRun() async =>
+          (await phone.status(NowRepository.cbslSource)).lastRun;
+      sources.switches = '{"paused": ["cbsl"]}';
+      await phone.refresh();
+      expect(await ratesRun(), isNull);
+
+      sources.siteDown = true;
+      now = now.add(const Duration(hours: 1));
+      await phone.refresh();
+      expect(await ratesRun(), isNull);
+
+      sources
+        ..siteDown = false
+        ..switches = null;
+      now = now.add(const Duration(hours: 1));
+      await phone.refresh();
+      expect(await ratesRun(), now);
+      expect(await phone.paused(), isEmpty);
+    });
+
+    test('paused, EDLCare is not asked for cuts or groups, and the power '
+        'cuts say so', () async {
+      await storePowerSetup(phone);
+      sources.switches = '{"paused": ["edlcare"]}';
+
+      await phone.refresh();
+      await phone.refreshGroups();
+
+      expect(sources.edlPaths, isEmpty);
+      expect(sources.groupQueries, isEmpty);
+      expect(await phone.groupsDue(), isFalse);
+      expect((await phone.powerNow())?.paused, isTrue);
+    });
+  });
+
   group('power cuts', () {
     test('without a place, EDLCare is not asked and nothing shows', () async {
       await phone.refresh();

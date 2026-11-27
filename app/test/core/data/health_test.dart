@@ -83,6 +83,27 @@ void main() {
     expect(Health(phone: [abroad]).needsALook(now), isFalse);
   });
 
+  test('a paused source is neither quiet nor not reached', () {
+    final paused = SourceHealth(
+      name: 'Power cuts',
+      lastRun: now.subtract(const Duration(days: 3)),
+      lastSuccess: now.subtract(const Duration(days: 3)),
+      lastError: 'EDLCare answered 500',
+      onPhone: true,
+      paused: true,
+    );
+    final never = SourceHealth(
+      name: 'Power cuts',
+      lastRun: now,
+      onPhone: true,
+      paused: true,
+    );
+
+    expect(paused.isStale(now), isFalse);
+    expect(never.notReached, isFalse);
+    expect(Health(phone: [paused, never]).needsALook(now), isFalse);
+  });
+
   test("the workflow's retired PSC entry is no longer listed", () {
     final json = jsonDecode(statusJson()) as Map<String, Object?>;
     (json['sources']! as Map<String, Object?>)['jobs'] = {

@@ -84,13 +84,17 @@ HeroStatus heroStatusFor(PowerState state, {required DateTime now}) {
   final checking = state.check == PowerCheck.checking;
   final failed = state.check == PowerCheck.failed;
   final last = power?.checked;
+  final paused = power?.paused ?? false;
   // When EDLCare fails, the detail already says which check is showing.
   final live =
+      !paused &&
       !checking &&
       !failed &&
       last != null &&
       now.difference(last) < const Duration(minutes: 15);
-  final checked = checking
+  final checked = paused
+      ? 'Paused'
+      : checking
       ? 'Checking...'
       : failed || last == null
       ? null

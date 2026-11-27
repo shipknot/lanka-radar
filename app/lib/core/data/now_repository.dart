@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
+import 'package:lanka_radar/core/data/data_branch.dart';
 import 'package:lanka_radar/core/data/database.dart';
 import 'package:lanka_radar/core/data/feed_item.dart';
 import 'package:lanka_radar/core/data/gas_prices.dart';
@@ -11,6 +12,7 @@ import 'package:lanka_radar/core/data/now_data.dart';
 import 'package:lanka_radar/core/data/phone_sources.dart';
 import 'package:lanka_radar/core/data/power_cuts.dart';
 import 'package:lanka_radar/core/data/psc_jobs.dart';
+import 'package:lanka_radar/core/data/switches.dart';
 import 'package:lanka_radar/core/data/wholesale_prices.dart';
 import 'package:lanka_radar/core/format/dates.dart';
 
@@ -47,7 +49,8 @@ final class SourceStatus extends Equatable {
 /// market prices, and HARTI's wholesale prices, which the phone reads itself
 /// and keeps a history of, plus the holidays and the workflow's backup rates
 /// the feed refresh stores. The phone also reads the PSC's announcements, for
-/// the feed's job items.
+/// the feed's job items. A source the data site's `switches.json` pauses isn't
+/// called.
 class NowRepository {
   NowRepository({
     required AppDatabase database,
@@ -57,11 +60,13 @@ class NowRepository {
     required this._edl,
     HartiWholesale? harti,
     Psc? psc,
+    DataBranch? remote,
     DateTime Function()? now,
     Future<Map<String, String>> Function()? tamilNames,
   }) : _db = database,
        _harti = harti ?? HartiWholesale(),
        _psc = psc ?? Psc(),
+       _remote = remote ?? DataBranch(),
        _now = now ?? DateTime.now,
        _tamilNames = tamilNames ?? _loadTamilNames;
 
@@ -120,6 +125,7 @@ class NowRepository {
   final EdlCare _edl;
   final HartiWholesale _harti;
   final Psc _psc;
+  final DataBranch _remote;
   final DateTime Function() _now;
   final Future<Map<String, String>> Function() _tamilNames;
   Map<String, String>? _names;
@@ -138,6 +144,7 @@ class NowRepository {
   /// and stops neither the others nor the feed.
   Future<void> refresh() async {
     await _db.saveSetting(_lastRefresh, _now().toIso8601String());
+    await _readSwitches();
     await _read(ceypetcoSource, () async {
       final prices = await _ceypetco.activePrices();
       await _db.saveFuelPrices([
@@ -231,6 +238,7 @@ class NowRepository {
     return PowerNow(
       places: [for (final place in places) cutsAt(place)],
       checked: (await status(powerSource)).lastSuccess,
+      paused: (await paused()).contains(powerSource),
     );
   }
 
@@ -287,10 +295,11 @@ class NowRepository {
   /// first the group it was in, then the groups of the other places, then
   /// the rest, one group's outlines at a time. A place's group is looked up
   /// again after [groupCheck] ([noGroupCheck] when it is in none) and when it
-  /// moves. A lookup that fails keeps what was found before.
+  /// moves. A lookup that fails keeps what was found before. Nothing is looked
+  /// up while EDLCare is paused.
   Future<void> refreshGroups() async {
     final places = (await powerSetup()).ready;
-    if (places.isEmpty) {
+    if (places.isEmpty || (await paused()).contains(powerSource)) {
       return;
     }
     final held = await _stored(groupsPath, 'places');
@@ -331,6 +340,9 @@ class NowRepository {
 
   /// Whether any place's group is due to be looked up ([refreshGroups]).
   Future<bool> groupsDue() async {
+    if ((await paused()).contains(powerSource)) {
+      return false;
+    }
     final held = await _stored(groupsPath, 'places');
     final now = _now();
     return (await powerSetup()).ready.any(
@@ -530,8 +542,13 @@ class NowRepository {
       wholesale: await wholesalePrices(),
       power: await powerNow(),
       laugfs: (await _db.file(laugfsPath))?.body,
+      paused: await paused(),
     );
   }
+
+  /// The phone's sources `switches.json` pauses, as last read.
+  Future<Set<String>> paused() async =>
+      pausedSources((await _db.file(switchesPath))?.body);
 
   /// The market prices the phone has read, parsed again only when they change.
   Future<MarketPrices> marketPrices() async {
@@ -562,34 +579,68 @@ class NowRepository {
     _names ??= await _tamilNames(),
   );
 
-  /// Every source's health: the workflow's, from its status.json, and the two
-  /// the phone reads itself.
+  /// Every source's health: the workflow's, from its status.json, and the
+  /// ones the phone reads itself.
   Future<Health> health() async {
     final workflow = parseWorkflowStatus((await _db.file('status.json'))?.body);
+    final paused = await this.paused();
+    Future<SourceHealth> phone(String name, String source) async {
+      final last = await status(source);
+      return SourceHealth(
+        name: name,
+        lastRun: last.lastRun,
+        lastSuccess: last.lastSuccess,
+        lastError: last.lastError,
+        onPhone: true,
+        paused: paused.contains(source),
+      );
+    }
+
     return Health(
       workflowRan: workflow.ran,
       github: workflow.sources,
       phone: [
-        _health('Fuel prices', await status(ceypetcoSource)),
-        _health('USD/LKR', await status(cbslSource)),
-        _health('Market prices', await status(marketSource)),
-        _health('Wholesale prices', await status(wholesaleSource)),
-        _health('Jobs (PSC)', await status(pscSource)),
+        await phone('Fuel prices', ceypetcoSource),
+        await phone('USD/LKR', cbslSource),
+        await phone('Market prices', marketSource),
+        await phone('Wholesale prices', wholesaleSource),
+        await phone('Jobs (PSC)', pscSource),
         if ((await powerSetup()).areaIds.isNotEmpty)
-          _health('Power cuts', await status(powerSource)),
+          await phone('Power cuts', powerSource),
       ],
     );
   }
 
-  static SourceHealth _health(String name, SourceStatus status) => SourceHealth(
-    name: name,
-    lastRun: status.lastRun,
-    lastSuccess: status.lastSuccess,
-    lastError: status.lastError,
-    onPhone: true,
-  );
+  /// Reads `switches.json` from the data site. When it can't be read, the copy
+  /// read before stays; when the site has none, nothing is paused.
+  Future<void> _readSwitches() async {
+    final held = await _db.file(switchesPath);
+    try {
+      final fetched = await _remote.get(switchesPath, etag: held?.etag);
+      if (fetched != null) {
+        await _db.saveFile(
+          FileRow(
+            path: switchesPath,
+            etag: fetched.etag,
+            body: fetched.body,
+            fetchedAt: _now(),
+          ),
+        );
+      }
+    } on DataBranchException catch (error) {
+      if (error.statusCode == 404) {
+        await _db.dropFile(switchesPath);
+      }
+    } on Exception {
+      // Offline: the last copy stands.
+    }
+  }
 
+  /// Reads [source] unless it is paused, recording how it went.
   Future<void> _read(String source, Future<void> Function() read) async {
+    if ((await paused()).contains(source)) {
+      return;
+    }
     final before = await status(source);
     final now = _now();
     SourceStatus after;

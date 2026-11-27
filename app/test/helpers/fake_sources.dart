@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
+import 'package:lanka_radar/core/data/data_branch.dart';
 import 'package:lanka_radar/core/data/database.dart';
 import 'package:lanka_radar/core/data/market_report.dart';
 import 'package:lanka_radar/core/data/now_repository.dart';
@@ -82,7 +83,14 @@ class FakeSources {
   final edlPaths = <String>[];
   final reports = <String, List<int>>{};
   bool offline = false;
+
+  /// The hosts of the requests to the sources (the data site's not included).
   final requests = <String>[];
+
+  /// The data site's switches.json (missing unless given), and whether the
+  /// site is out of reach while the sources answer.
+  String? switches;
+  bool siteDown = false;
 
   /// The paths of the requests to CBSL's price reports and their listing.
   final marketRequests = <String>[];
@@ -100,6 +108,16 @@ class FakeSources {
   http.Client get client => MockClient((request) async {
     if (offline) {
       throw http.ClientException('offline', request.url);
+    }
+    if (request.url.host == 'shipknot.github.io') {
+      if (siteDown) {
+        throw http.ClientException('site down', request.url);
+      }
+      return switch (switches) {
+        final String body when request.url.path.endsWith('/switches.json') =>
+          http.Response.bytes(utf8.encode(body), 200),
+        _ => http.Response('', 404),
+      };
     }
     requests.add(request.url.host);
     final path = request.url.path;
@@ -159,6 +177,7 @@ class FakeSources {
         harti: HartiWholesale(client: client, read: readBulletin),
         psc: Psc(client: client),
         edl: EdlCare(client: client),
+        remote: DataBranch(client: client),
         now: now,
         tamilNames: () async => const {'Deepavali': 'TA Deepavali'},
       );
