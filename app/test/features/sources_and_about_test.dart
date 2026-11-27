@@ -79,8 +79,11 @@ void main() {
     expect(find.text('Fuel prices'), findsOneWidget);
     expect(find.text('Market prices'), findsOneWidget);
     expect(find.text('Wholesale prices'), findsOneWidget);
-    expect(find.textContaining('Never answered'), findsNWidgets(4));
-    expect(find.textContaining('Last try failed'), findsNWidgets(4));
+    expect(find.text('Jobs (PSC)'), findsOneWidget);
+    // Out of reach of a test, as of a phone abroad: not reached, not quiet.
+    expect(find.textContaining('Not reached yet'), findsNWidgets(5));
+    expect(find.textContaining('Never answered'), findsNothing);
+    expect(find.textContaining('Last try failed'), findsNWidgets(5));
   });
 
   testWidgets('About says who makes the app, and opens its code and privacy '

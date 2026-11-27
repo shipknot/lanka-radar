@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lanka_radar/core/data/database.dart';
 import 'package:lanka_radar/core/data/now_repository.dart';
 import 'package:lanka_radar/core/data/power_cuts.dart';
+import 'package:lanka_radar/core/data/psc_jobs.dart';
 import 'package:lanka_radar/core/data/wholesale_prices.dart';
 
 import '../../helpers/fake_branch.dart';
@@ -80,6 +81,8 @@ void main() {
 
   test('refreshIfStale waits until the last try is old enough', () async {
     const maxAge = Duration(minutes: 15);
+    // Read once, the PSC's homepage waits its own six hours.
+    sources.psc = fixture('psc_home.html');
 
     await phone.refreshIfStale(maxAge);
     sources.requests.clear();
@@ -165,9 +168,66 @@ void main() {
       final health = await phone.health();
       expect(
         [for (final source in health.phone) source.name],
-        ['Fuel prices', 'USD/LKR', 'Market prices', 'Wholesale prices'],
+        [
+          'Fuel prices',
+          'USD/LKR',
+          'Market prices',
+          'Wholesale prices',
+          'Jobs (PSC)',
+        ],
       );
     });
+  });
+
+  group('PSC jobs', () {
+    setUp(() => sources.psc = fixture('psc_home.html'));
+
+    test('a refresh keeps the announcements for the feed', () async {
+      await phone.refresh();
+
+      final kept = await database.file(pscAnnouncementsPath);
+      expect(jsonDecode(kept!.body!) as List<Object?>, hasLength(7));
+      final status = await phone.status(NowRepository.pscSource);
+      expect(status.lastSuccess, now);
+    });
+
+    test('the homepage is read again six hours after a read that worked, '
+        'and on the next refresh after one that failed', () async {
+      sources.offline = true;
+      await phone.refresh();
+      sources.offline = false;
+      now = now.add(const Duration(minutes: 20));
+      await phone.refresh();
+      expect(sources.requests, contains('psc.gov.lk'));
+
+      sources.requests.clear();
+      now = now.add(const Duration(hours: 5));
+      await phone.refresh();
+      expect(sources.requests, isNot(contains('psc.gov.lk')));
+
+      now = now.add(const Duration(hours: 1));
+      await phone.refresh();
+      expect(sources.requests, contains('psc.gov.lk'));
+    });
+  });
+
+  test("abroad, where none of the phone's sources answer, nothing needs a "
+      'look until one that worked here stops', () async {
+    sources.offline = true;
+    await phone.refresh();
+
+    var health = await phone.health();
+    expect(health.phone.every((source) => source.notReached), isTrue);
+    expect(health.needsALook(now), isFalse);
+
+    sources.offline = false;
+    await phone.refresh();
+    sources.offline = true;
+    now = now.add(const Duration(days: 2));
+    await phone.refresh();
+
+    health = await phone.health();
+    expect(health.needsALook(now), isTrue);
   });
 
   group('wholesale prices', () {

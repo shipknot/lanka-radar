@@ -380,12 +380,14 @@ class AppDatabase extends _$AppDatabase {
     (batch) => batch.insertAll(items, rows, mode: InsertMode.insertOrIgnore),
   );
 
-  /// Drops the items the phone made for days up to [day] (yyyy-MM-dd), which
-  /// the workflow's copy of the rates covers now.
-  Future<void> dropPhoneItemsThrough(String day) =>
+  /// Drops the rate items the phone made for days up to [day] (yyyy-MM-dd),
+  /// which the workflow's copy of the rates covers now. Its job items stay:
+  /// the workflow no longer reads the PSC.
+  Future<void> dropPhoneRatesThrough(String day) =>
       (delete(items)..where(
             (row) =>
                 row.month.equals(phoneMonth) &
+                row.topic.equals('rates') &
                 row.published.isSmallerOrEqualValue(day),
           ))
           .go();
@@ -405,8 +407,8 @@ class AppDatabase extends _$AppDatabase {
 
   static String monthPath(String month) => 'months/$month.json';
 
-  /// Where the items the phone makes itself (USD/LKR moves from CBSL's rates)
-  /// are filed: no month file replaces them, and the workflow's copy of the
+  /// Where the items the phone makes itself (USD/LKR moves from CBSL's rates,
+  /// the PSC's recruitments) are filed: no month file replaces them, and the workflow's copy of the
   /// same ID takes over when it comes.
   static const phoneMonth = 'phone';
 
