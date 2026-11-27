@@ -3,6 +3,34 @@
   "month": "2026-11",
   "items": [
     {
+      "id": "gazette-2515-34",
+      "source": "gazettes",
+      "topic": "gazettes",
+      "issuer": "Election Commission",
+      "headline": {
+        "en": "NOTICE UNDER SECTION 10A(1)(a) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262) Welikanda Pradeshiya Sabha",
+        "ta": null
+      },
+      "keyNumbers": [],
+      "published": "2026-11-20",
+      "effective": null,
+      "links": {
+        "page": "https://documents.gov.lk/web/extra_gazettes",
+        "pdf_en": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208175%20(E)_1795761878.pdf",
+        "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/PG%208175%20(S)_1795761870.pdf"
+      },
+      "data": {
+        "number": "2515/34",
+        "group": "elections",
+        "languages": [
+          "en",
+          "si"
+        ],
+        "title": "NOTICE UNDER SECTION 10A(1)(a) OF THE LOCAL AUTHORITIES ELECTIONS ORDINANCE (CHAPTER 262) Welikanda Pradeshiya Sabha"
+      },
+      "alert": true
+    },
+    {
       "id": "gazette-2515-29",
       "source": "gazettes",
       "topic": "gazettes",
