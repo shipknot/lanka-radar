@@ -1,13 +1,11 @@
 # Publishes the data branch, with the pages in site/ (the privacy policy), on
 # GitHub Pages at https://shipknot.github.io/lanka-radar/, where the app reads
-# it. Runs after each successful scrape, on changes to site/ on main, and by
-# hand. It only reads the data branch: the scrape workflow alone writes it.
+# it. Scrape starts it after each successful run; it also runs on changes to
+# site/ on main, and by hand. It only reads the data branch: the scrape
+# workflow alone writes it.
 name: Pages
 
 on:
-  workflow_run:
-    workflows: [Scrape]
-    types: [completed]
   push:
     branches: [main]
     paths:
@@ -27,8 +25,6 @@ permissions:
 
 jobs:
   deploy:
-    # A failed scrape leaves nothing new to publish.
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     environment:

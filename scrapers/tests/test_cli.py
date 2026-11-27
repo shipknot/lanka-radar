@@ -1,7 +1,10 @@
 import json
 from datetime import UTC, date, datetime, timedelta
+from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
+
+import pytest
 
 from lanka_radar import cli
 from lanka_radar.items import Item
@@ -51,6 +54,34 @@ def test_exits_1_once_when_a_source_fails_three_runs_in_a_row(store: Store) -> N
     codes = [cli.run(store, None, ["b"], NOW + timedelta(hours=3 * n), sources) for n in range(4)]
 
     assert codes == [0, 0, 1, 0]
+
+
+def test_a_run_without_alerts_leaves_the_outage_to_the_next_run(store: Store) -> None:
+    sources = {"b": source(broken)}
+
+    quiet = [
+        cli.run(store, None, ["b"], NOW + timedelta(hours=n), sources, alert=False)
+        for n in range(4)
+    ]
+    later = [cli.run(store, None, ["b"], NOW + timedelta(hours=n), sources) for n in (4, 5)]
+
+    assert quiet == [0, 0, 0, 0]
+    assert later == [1, 0]
+
+
+def test_no_alert_turns_the_alert_off(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    alerts: list[bool] = []
+
+    def run(*args: Any, alert: bool = True) -> int:
+        alerts.append(alert)
+        return 0
+
+    monkeypatch.setattr(cli, "run", run)
+
+    cli.main(["run", "--data", str(tmp_path)])
+    cli.main(["run", "--data", str(tmp_path), "--no-alert"])
+
+    assert alerts == [True, False]
 
 
 def test_drops_the_status_of_a_removed_source(store: Store) -> None:

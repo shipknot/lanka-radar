@@ -52,7 +52,7 @@ docs/              plan, this guide, the README's images
 
 ## Data
 
-The scrape workflow (`.github/workflows/scrape.yml`) runs every hour and commits to the `data` branch, which never merges into `main`:
+The scrape workflow (`.github/workflows/scrape.yml`) runs every hour (see [The hourly chain](#the-hourly-chain)) and commits to the `data` branch, which never merges into `main`:
 
 | File | What it holds |
 | --- | --- |
@@ -62,16 +62,24 @@ The scrape workflow (`.github/workflows/scrape.yml`) runs every hour and commits
 | `months/index.json` | each month's item count and file hash, so the app downloads only the months that changed |
 | `datasets/usd-lkr.json` | Frankfurter's copy of CBSL's daily USD/LKR rate since 1 January 2026, a backup that often runs days behind |
 | `datasets/holidays.json` | public holidays from 2026 on, Poya days included |
-| `status.json` | each source's last run, last success and last error |
+| `status.json` | each source's last run, last success, last error and failures in a row |
 | `state/<name>.json` | the scrapers' own bookkeeping, not for the app |
 
-The Pages workflow (`.github/workflows/pages.yml`) publishes the `data` branch, with the files in `site/` (the front page, the privacy policy and `switches.json`), at https://shipknot.github.io/lanka-radar/ after each successful scrape and on changes to `site/`. It only reads the branch, and the app reads the data from there.
+The Pages workflow (`.github/workflows/pages.yml`) publishes the `data` branch, with the files in `site/` (the front page, the privacy policy and `switches.json`), at https://shipknot.github.io/lanka-radar/ after each successful scrape (Scrape starts it) and on changes to `site/`. It only reads the branch, and the app reads the data from there.
 
 Feed items are news: a gazette (fuel price revisions included), a USD/LKR move of 2% or more in a week, an exam notice. Gazettes become items only when they belong to a daily-life group: prices, taxes and imports; energy and utilities; wages and labour; elections. Exam notices become items for school exams (O/L, A/L, Grade 5 scholarship, GIT) and the department's own press releases and notices; a timetable's exam days, read once from its PDF, go in its data as `days`. The weekly gazette's Part I (IIA) brings one item per vacancy (under jobs) and per examination notice (under exams), with its page in the PDF and the closing date for applications. A new Litro price list is an item too, its prices read off the list's image with OCR (Tesseract, on GitHub's runner) for every district and cylinder size. Laugfs's price list is a table on its site: its current prices are a dataset, and a change becomes an item.
 
 Each gazette item's PDFs are read once: the title on page 1 becomes the headline when the list only names the issuer, and in price gazettes (CAA orders, fuel revisions) the price table becomes key numbers. The English PDF's first 10 pages are kept as text (`texts/`, by month) so the app can search inside gazettes. Tamil titles come from an old Bamini-encoded font, converted to Unicode with Open-Tamil, or from Arial Unicode MS, whose text in these PDFs is scrambled, so it is read from the glyph IDs instead.
 
-CEYPETCO's fuel prices, CBSL's rate search and CBSL's Daily Price Report only answer inside Sri Lanka, so the workflow (on GitHub's servers abroad) can't read them. The app reads them on the phone during its sync: the fuel prices fill its Now card (fuel price changes reach the feed as fuel revision gazettes), the same-day USD/LKR rate makes the same rate items, with the same IDs, as the workflow's backup copy, so a copy from either side is recognized, and each weekday's price report (a PDF, read with PDFium) adds the retail prices of everyday food at Pettah, Dambulla, Narahenpita and Negombo to the Prices tab. HARTI's daily bulletin (also a PDF, also out of reach from GitHub) adds the wholesale prices of vegetables at ten economic centres and of rice and dried foods at Pettah. The Public Service Commission's homepage has refused servers abroad since November 2026, so the phone reads it too, every six hours at most: its recruitments become the same `jobs-psc-<seconds>` items the workflow made, and those it had already published stay as they are. A source that fails 3 runs in a row fails the workflow once, so GitHub emails you; after that its failures are only recorded in `status.json`, and the app flags the source. A source the phone reads is flagged only once it has answered on that phone, since a phone abroad never reaches any of them.
+CEYPETCO's fuel prices, CBSL's rate search and CBSL's Daily Price Report only answer inside Sri Lanka, so the workflow (on GitHub's servers abroad) can't read them. The app reads them on the phone during its sync: the fuel prices fill its Now card (fuel price changes reach the feed as fuel revision gazettes), the same-day USD/LKR rate makes the same rate items, with the same IDs, as the workflow's backup copy, so a copy from either side is recognized, and each weekday's price report (a PDF, read with PDFium) adds the retail prices of everyday food at Pettah, Dambulla, Narahenpita and Negombo to the Prices tab. HARTI's daily bulletin (also a PDF, also out of reach from GitHub) adds the wholesale prices of vegetables at ten economic centres and of rice and dried foods at Pettah. The Public Service Commission's homepage has refused servers abroad since November 2026, so the phone reads it too, every six hours at most: its recruitments become the same `jobs-psc-<seconds>` items the workflow made, and those it had already published stay as they are. A source that fails 3 runs in a row fails one run, so GitHub emails you; after that its failures are only recorded in `status.json`, and the app flags the source. A source the phone reads is flagged only once it has answered on that phone, since a phone abroad never reaches any of them.
+
+### The hourly chain
+
+GitHub starts scheduled runs late and skips most of them when it is busy: with an hourly cron, Scrape ran about three times a day. So the Hourly workflow (`.github/workflows/hourly.yml`) starts it. Each Hourly run waits an hour in the `hourly` environment, whose wait timer holds no runner and isn't billed, then starts the next Hourly run and a Scrape run. Scrape keeps its own schedule as a fallback, and each Scrape run starts an Hourly run if none is waiting, which restarts the chain after a GitHub hiccup and starts it the first time.
+
+It needs one setting, made once by a repository admin: Settings > Environments > New environment, named `hourly`, with a wait timer of 60 minutes. An Hourly run that didn't wait stops the chain instead of starting the next run at once.
+
+GitHub emails a failed run only to whoever started it, and the chain's runs are started by GitHub's bot, so their scrapers run with `--no-alert`: an outage that reaches 3 failures in a row fails the next scheduled or manual run instead, once.
 
 ### Pausing a source the phone reads
 

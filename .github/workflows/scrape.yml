@@ -1,8 +1,10 @@
-# Runs the scrapers every hour (GitHub starts scheduled runs late and skips some, so
-# in practice every few hours) and commits what they find to the data branch.
+# Runs the scrapers and commits what they find to the data branch. The Hourly
+# workflow (hourly.yml) starts this every hour. The schedule here is the fallback
+# (GitHub starts scheduled runs late and skips most, about three a day get through),
+# and each run starts the hourly chain again if it has stopped.
 #
 # The data branch holds data only and never merges into main. A source that fails
-# 3 runs in a row fails the run once (GitHub emails you); status.json records the rest.
+# 3 runs in a row fails one run (GitHub emails you); status.json records the rest.
 name: Scrape
 
 on:
@@ -47,8 +49,18 @@ jobs:
             git worktree add --orphan -b data data
           fi
 
+      # GitHub emails a failed run only to whoever started it. The hourly chain's
+      # runs are started by GitHub's bot, so they leave an outage for the next
+      # scheduled or manual run to report.
       - name: Scrape
-        run: python -m lanka_radar run --data data
+        env:
+          STARTED_BY: ${{ github.triggering_actor }}
+        run: |
+          if [ "$STARTED_BY" = "github-actions[bot]" ]; then
+            python -m lanka_radar run --data data --no-alert
+          else
+            python -m lanka_radar run --data data
+          fi
 
       - name: Commit the data
         if: ${{ !cancelled() }}
@@ -64,6 +76,15 @@ jobs:
             commit --quiet -m "data: update $(date -u +%Y-%m-%dT%H:%MZ)"
           git push --quiet origin HEAD:refs/heads/data
 
+      # Started from here rather than on workflow_run: events from a run's own
+      # token start no workflows (dispatches excepted), and the hourly chain's
+      # runs are started with that token. A hiccup here waits for the next run.
+      - name: Publish
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main
+
       # GitHub pauses scheduled workflows in public repos after 60 days without
       # activity on main, and data commits don't count. Enabling the workflow again
       # resets that counter.
@@ -72,3 +93,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api --method PUT "repos/$GITHUB_REPOSITORY/actions/workflows/scrape.yml/enable"
+
+      # If no Hourly run is waiting (the first time, or after a GitHub hiccup),
+      # start one. A failure here mustn't fail the run, or Pages would skip it.
+      - name: Keep the hourly chain going
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          waiting=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/hourly.yml/runs?per_page=20" \
+            --jq '[.workflow_runs[] | select(.status != "completed")] | length')
+          if [ "$waiting" -eq 0 ]; then
+            gh workflow run hourly.yml --repo "$GITHUB_REPOSITORY" --ref main
+            echo "Started the hourly chain again."
+          fi
