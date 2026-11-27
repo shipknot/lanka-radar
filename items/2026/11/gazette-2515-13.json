@@ -1,0 +1,25 @@
+{
+  "id": "gazette-2515-13",
+  "source": "gazettes",
+  "topic": "gazettes",
+  "issuer": "Ministry of Labour",
+  "headline": {
+    "en": "Ministry of Labour",
+    "ta": null
+  },
+  "keyNumbers": [],
+  "published": "2026-11-18",
+  "effective": null,
+  "links": {
+    "page": "https://documents.gov.lk/web/extra_gazettes",
+    "pdf_si": "https://documents.gov.lk/api/content-file-proxy?file=/extra-gazette-content/G48543(S)(C)%20%20%5BI%20-%20I%5D_1795772100.pdf"
+  },
+  "data": {
+    "number": "2515/13",
+    "group": "labour",
+    "languages": [
+      "si"
+    ]
+  },
+  "alert": true
+}
