@@ -59,6 +59,51 @@ void main() {
     expect(untried.isStale(now), isFalse);
   });
 
+  test('a phone source that has never answered here is not reached yet, not '
+      'quiet, until it has answered once', () {
+    final abroad = SourceHealth(
+      name: 'Fuel prices',
+      lastRun: now,
+      onPhone: true,
+    );
+    final stopped = SourceHealth(
+      name: 'Fuel prices',
+      lastRun: now,
+      lastSuccess: now.subtract(const Duration(hours: 30)),
+      onPhone: true,
+    );
+    final github = SourceHealth(name: 'Gazettes', lastRun: now);
+
+    expect(abroad.notReached, isTrue);
+    expect(abroad.isStale(now), isFalse);
+    expect(stopped.notReached, isFalse);
+    expect(stopped.isStale(now), isTrue);
+    expect(github.notReached, isFalse);
+    expect(github.isStale(now), isTrue);
+    expect(Health(phone: [abroad]).needsALook(now), isFalse);
+  });
+
+  test("the workflow's retired PSC entry is no longer listed", () {
+    final json = jsonDecode(statusJson()) as Map<String, Object?>;
+    (json['sources']! as Map<String, Object?>)['jobs'] = {
+      'lastRun': '2026-10-16T09:09:23Z',
+      'lastSuccess': '2026-10-01T09:09:23Z',
+      'lastError': 'ConnectTimeout: timed out',
+      'failures': 40,
+    };
+
+    final status = parseWorkflowStatus(jsonEncode(json));
+
+    expect(
+      [for (final source in status.sources) source.name],
+      ['Gazettes', 'Holidays'],
+    );
+    expect(
+      Health(workflowRan: status.ran, github: status.sources).needsALook(now),
+      isFalse,
+    );
+  });
+
   test('needs a look when the workflow or any source has gone quiet', () {
     final quiet = parseWorkflowStatus(
       statusJson(gazettes: '2026-10-14T09:00:00Z'),

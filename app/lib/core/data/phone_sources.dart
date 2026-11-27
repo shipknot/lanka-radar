@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:lanka_radar/core/data/harti_bulletin.dart';
 import 'package:lanka_radar/core/data/market_report.dart';
 import 'package:lanka_radar/core/data/power_cuts.dart';
+import 'package:lanka_radar/core/data/psc_jobs.dart';
 import 'package:lanka_radar/core/format/dates.dart';
 import 'package:pdfrx/pdfrx.dart';
 
@@ -309,6 +310,26 @@ class EdlCare {
       throw SourceException('EDLCare', response.statusCode);
     }
     return utf8.decode(response.bodyBytes);
+  }
+}
+
+/// The Public Service Commission's homepage, with its latest announcements
+/// ([parsePscAnnouncements] reads them).
+class Psc {
+  Psc({http.Client? client}) : _client = client ?? http.Client();
+
+  final http.Client _client;
+
+  Future<List<PscAnnouncement>> announcements() async {
+    final response = await _client
+        .get(pscPage, headers: {'User-Agent': userAgent})
+        .timeout(_timeout);
+    if (response.statusCode != 200) {
+      throw SourceException('PSC', response.statusCode);
+    }
+    return parsePscAnnouncements(
+      utf8.decode(response.bodyBytes, allowMalformed: true),
+    );
   }
 }
 

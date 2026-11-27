@@ -4,6 +4,7 @@ import 'package:lanka_radar/core/data/data_branch.dart';
 import 'package:lanka_radar/core/data/database.dart';
 import 'package:lanka_radar/core/data/feed_item.dart';
 import 'package:lanka_radar/core/data/gas_prices.dart';
+import 'package:lanka_radar/core/data/psc_jobs.dart';
 import 'package:lanka_radar/core/data/rate_moves.dart';
 import 'package:lanka_radar/core/data/search_text.dart';
 import 'package:lanka_radar/core/data/wholesale_prices.dart';
@@ -102,23 +103,36 @@ class FeedRepository {
   /// Makes the workflow's USD/LKR move items from the rates the phone read from
   /// CBSL, for the days the workflow's copy of the rates doesn't reach yet, and
   /// drops those it has caught up with: if it found the move too, its own item
-  /// comes in the month files under the same ID.
+  /// comes in the month files under the same ID. Makes the workflow's job
+  /// items too, from the PSC announcements the phone read; those the workflow
+  /// published before it lost the site stay as they are.
   Future<void> updatePhoneItems() async {
     final dataset = datasetRates((await _db.file(usdLkrPath))?.body);
     final last = dataset.isEmpty ? null : (dataset.keys.toList()..sort()).last;
     if (last != null) {
-      await _db.dropPhoneItemsThrough(last);
+      await _db.dropPhoneRatesThrough(last);
     }
     final rates = {
       for (final row in await _db.allRates()) row.day: row.rate,
       // Where both have a day, the workflow's rate, so both find the same moves.
       ...dataset,
     };
+    final announcements = switch ((await _db.file(
+      pscAnnouncementsPath,
+    ))?.body) {
+      final String body => [
+        for (final one in jsonDecode(body) as List<Object?>)
+          PscAnnouncement.fromJson(one! as Map<String, Object?>),
+      ],
+      null => const <PscAnnouncement>[],
+    };
     final now = _now();
     await _db.addPhoneItems([
       for (final move in weeklyMoves(rates))
         if (last == null || move.day.compareTo(last) > 0)
           _row(moveItem(move), AppDatabase.phoneMonth, now),
+      for (final item in pscJobItems(announcements))
+        _row(item, AppDatabase.phoneMonth, now),
     ]);
   }
 

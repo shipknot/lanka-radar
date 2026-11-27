@@ -8,7 +8,6 @@ const githubSources = {
   'gazettes': 'Gazettes',
   'weekly': 'Weekly gazette',
   'exams': 'Exam notices',
-  'jobs': 'Jobs (PSC)',
   'gas': 'LP gas (Litro)',
   'laugfs': 'LP gas (Laugfs)',
   'holidays': 'Holidays',
@@ -22,6 +21,7 @@ final class SourceHealth extends Equatable {
     this.lastRun,
     this.lastSuccess,
     this.lastError,
+    this.onPhone = false,
   });
 
   final String name;
@@ -31,13 +31,23 @@ final class SourceHealth extends Equatable {
   /// Null when the last run worked.
   final String? lastError;
 
-  /// Tried, but no success for a day or more.
+  /// Read by the phone itself. Those sources only answer inside Sri Lanka, so
+  /// one that has never answered may just be out of reach (a phone abroad).
+  final bool onPhone;
+
+  /// Never answered on this phone, which only a phone source is let off for.
+  bool get notReached => onPhone && lastRun != null && lastSuccess == null;
+
+  /// Tried, but no success for a day or more; a phone source only once it has
+  /// answered here.
   bool isStale(DateTime now) =>
       lastRun != null &&
-      (lastSuccess == null || now.difference(lastSuccess!) > staleAfter);
+      (lastSuccess == null
+          ? !onPhone
+          : now.difference(lastSuccess!) > staleAfter);
 
   @override
-  List<Object?> get props => [name, lastRun, lastSuccess, lastError];
+  List<Object?> get props => [name, lastRun, lastSuccess, lastError, onPhone];
 }
 
 /// The health of every source: what GitHub's workflow reads (and when it last

@@ -65,6 +65,10 @@ class FakeSources {
 
   /// The file names of the bulletins asked for.
   final bulletinRequests = <String>[];
+
+  /// The PSC's homepage, empty unless given (psc_home.html is the one saved on
+  /// 19 Oct 2026), so other tests' feeds have no job items from it.
+  String psc = '<html></html>';
   String powerOutages = fixture('edlcare_outages_49.json');
   String powerSchedule = fixture('edlcare_load_shedding.json');
 
@@ -135,6 +139,7 @@ class FakeSources {
         request.url.queryParameters['groupId']!,
       ),
       'api.ceypetco.gov.lk' => ceypetco,
+      'psc.gov.lk' => psc,
       'www.cbsl.gov.lk' when path.endsWith('/price-report') => marketListing,
       'www.harti.gov.lk' when path.endsWith('/daily-price.php') => hartiListing,
       'www.cbsl.gov.lk' => cbsl,
@@ -152,6 +157,7 @@ class FakeSources {
         cbsl: Cbsl(client: client),
         market: CbslMarket(client: client, read: readReport),
         harti: HartiWholesale(client: client, read: readBulletin),
+        psc: Psc(client: client),
         edl: EdlCare(client: client),
         now: now,
         tamilNames: () async => const {'Deepavali': 'TA Deepavali'},

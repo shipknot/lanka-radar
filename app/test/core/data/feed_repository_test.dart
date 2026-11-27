@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lanka_radar/core/data/database.dart';
 import 'package:lanka_radar/core/data/feed_repository.dart';
+import 'package:lanka_radar/core/data/psc_jobs.dart';
 import 'package:lanka_radar/core/data/rate_moves.dart';
 
 import '../../helpers/fake_branch.dart';
+import '../../helpers/fake_sources.dart';
 
 void main() {
   late AppDatabase database;
@@ -366,6 +368,70 @@ void main() {
       await feed.updatePhoneItems();
 
       expect(await feed.item(move), isNull);
+    });
+  });
+
+  group("the phone's own PSC jobs", () {
+    // On the saved homepage: two recruitments from 2026 and two from 2023.
+    const legal = 'jobs-psc-1789464305';
+    const education = 'jobs-psc-1789723381';
+
+    Future<void> readHomepage() => database.saveFile(
+      FileRow(
+        path: pscAnnouncementsPath,
+        body: jsonEncode([
+          for (final one in parsePscAnnouncements(fixture('psc_home.html')))
+            one.toJson(),
+        ]),
+        fetchedAt: now,
+      ),
+    );
+
+    setUp(() async {
+      await feed.refresh();
+      await readHomepage();
+    });
+
+    test("are the workflow's items for this year's recruitments", () async {
+      await feed.updatePhoneItems();
+
+      final item = await feed.item(education);
+      expect(item?.topic, 'jobs');
+      expect(item?.issuer, 'Public Service Commission');
+      expect(item?.firstSeen, now);
+      expect(await feed.item(legal), isNotNull);
+      expect(await feed.item('jobs-psc-1693975072'), isNull);
+    });
+
+    test('leave an item the workflow published before as it was', () async {
+      final seen = now;
+      remote.putMonth('2026-09', [
+        item(legal, '2026-09-15', topic: 'jobs', headline: 'From the workflow'),
+      ]);
+      await feed.refresh();
+      now = now.add(const Duration(hours: 3));
+
+      await feed.updatePhoneItems();
+
+      final kept = await feed.item(legal);
+      expect(kept?.headlineEn, 'From the workflow');
+      expect(kept?.firstSeen, seen);
+    });
+
+    test("stay when the workflow's rates catch up with the phone's", () async {
+      await feed.updatePhoneItems();
+      remote.files[FeedRepository.usdLkrPath] = jsonEncode({
+        'source': 'frankfurter',
+        'rates': [
+          {'date': '2026-10-14', 'rate': 331},
+        ],
+      });
+      await feed.refresh();
+
+      await feed.updatePhoneItems();
+
+      expect(await feed.item(education), isNotNull);
+      expect(await feed.item(legal), isNotNull);
     });
   });
 

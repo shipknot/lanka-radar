@@ -10,6 +10,7 @@ import 'package:lanka_radar/core/data/market_prices.dart';
 import 'package:lanka_radar/core/data/now_data.dart';
 import 'package:lanka_radar/core/data/phone_sources.dart';
 import 'package:lanka_radar/core/data/power_cuts.dart';
+import 'package:lanka_radar/core/data/psc_jobs.dart';
 import 'package:lanka_radar/core/data/wholesale_prices.dart';
 import 'package:lanka_radar/core/format/dates.dart';
 
@@ -45,7 +46,8 @@ final class SourceStatus extends Equatable {
 /// The Now card's sources: CEYPETCO's fuel prices, CBSL's USD/LKR and its
 /// market prices, and HARTI's wholesale prices, which the phone reads itself
 /// and keeps a history of, plus the holidays and the workflow's backup rates
-/// the feed refresh stores.
+/// the feed refresh stores. The phone also reads the PSC's announcements, for
+/// the feed's job items.
 class NowRepository {
   NowRepository({
     required AppDatabase database,
@@ -54,10 +56,12 @@ class NowRepository {
     required this._market,
     required this._edl,
     HartiWholesale? harti,
+    Psc? psc,
     DateTime Function()? now,
     Future<Map<String, String>> Function()? tamilNames,
   }) : _db = database,
        _harti = harti ?? HartiWholesale(),
+       _psc = psc ?? Psc(),
        _now = now ?? DateTime.now,
        _tamilNames = tamilNames ?? _loadTamilNames;
 
@@ -66,6 +70,7 @@ class NowRepository {
   static const marketSource = 'cbsl-market';
   static const wholesaleSource = 'harti';
   static const powerSource = 'edlcare';
+  static const pscSource = 'psc';
 
   /// Each place's area's outages as EDLCare last listed them.
   static const powerPath = 'phone/power-cuts.json';
@@ -100,6 +105,10 @@ class NowRepository {
   /// first read takes only the newest: the history starts there.
   static const bulletinsPerRead = 3;
 
+  /// How long the PSC's homepage (about 130 KB) is left alone after a read
+  /// that worked: it puts up a few announcements a week.
+  static const pscRecheck = Duration(hours: 6);
+
   /// How far back each CBSL read goes: enough for the 30-day sheet.
   static const rateDays = 45;
   static const _lastRefresh = 'phone.lastRefresh';
@@ -110,6 +119,7 @@ class NowRepository {
   final CbslMarket _market;
   final EdlCare _edl;
   final HartiWholesale _harti;
+  final Psc _psc;
   final DateTime Function() _now;
   final Future<Map<String, String>> Function() _tamilNames;
   Map<String, String>? _names;
@@ -152,6 +162,7 @@ class NowRepository {
     });
     await _readMarket();
     await _readWholesale();
+    await _readPsc();
     await refreshPower();
     await refreshGroups();
   }
@@ -469,6 +480,25 @@ class NowRepository {
     });
   }
 
+  /// The PSC's latest announcements, kept for the feed to make its job items
+  /// from.
+  Future<void> _readPsc() async {
+    final last = (await status(pscSource)).lastSuccess;
+    if (last != null && _now().difference(last) < pscRecheck) {
+      return;
+    }
+    await _read(pscSource, () async {
+      final announcements = await _psc.announcements();
+      await _db.saveFile(
+        FileRow(
+          path: pscAnnouncementsPath,
+          body: jsonEncode([for (final one in announcements) one.toJson()]),
+          fetchedAt: _now(),
+        ),
+      );
+    });
+  }
+
   /// The wholesale prices the phone has read.
   Future<WholesalePrices> wholesalePrices() async =>
       WholesalePrices.fromJson((await _db.file(wholesalePath))?.body);
@@ -544,6 +574,7 @@ class NowRepository {
         _health('USD/LKR', await status(cbslSource)),
         _health('Market prices', await status(marketSource)),
         _health('Wholesale prices', await status(wholesaleSource)),
+        _health('Jobs (PSC)', await status(pscSource)),
         if ((await powerSetup()).areaIds.isNotEmpty)
           _health('Power cuts', await status(powerSource)),
       ],
@@ -555,6 +586,7 @@ class NowRepository {
     lastRun: status.lastRun,
     lastSuccess: status.lastSuccess,
     lastError: status.lastError,
+    onPhone: true,
   );
 
   Future<void> _read(String source, Future<void> Function() read) async {
