@@ -28,6 +28,7 @@ Scraper tests live in `scrapers/tests/` and run on saved fixtures in `scrapers/t
 
 - Only GitHub and the app. No servers, accounts, Firebase, analytics, crash reporting or AI services.
 - Scrapers write only to the `data` branch, through the scrape workflow. `main` holds code only.
+- Scrape runs every hour from the Hourly workflow's chain (`hourly.yml`: each run waits on the `hourly` environment's 60 minute wait timer, then starts the next run and Scrape); Scrape's own schedule is the fallback and restarts the chain. The chain's runs scrape with `--no-alert`, since GitHub emails a failed run only to whoever started it (docs/DEVELOPMENT.md, "The hourly chain").
 - The Pages workflow publishes the `data` branch, with `site/` (the front page, the privacy policy, `switches.json`), at `shipknot.github.io/lanka-radar/`. It only reads `data`.
 - `site/switches.json` is the remote off-switch: a phone source named in its `paused` list isn't called by any phone from its next sync on (docs/DEVELOPMENT.md, "Pausing a source the phone reads"). A new phone source gets a status name the file can use, and goes through the repository's `_read` so a pause stops it.
 - One module per source in `scrapers/src/lanka_radar/sources/`, with a `NAME` and `run(web, store, today)`. Parsing lives in pure functions tested against saved responses in `scrapers/tests/fixtures/` (kept byte for byte: `-text` in `.gitattributes`). Shared code (HTTP client `web.py`, item model, `store.py`) lives in the package, not in the source modules.

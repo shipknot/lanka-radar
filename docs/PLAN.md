@@ -1,7 +1,7 @@
 # Lanka Radar plan
 
-Living document, updated as work proceeds. Last updated: 2026-11-26.
-Status: **M0 to M10 built: the app is released (v0.18.1 the latest, a 31 MB arm64 APK) and in daily use. M11, the redesign, is half built (M11a). Next: M12, publishing on Google Play under ShipKnot, with the rest of M11 built during its closed test; ideas for afterwards are under Later.**
+Living document, updated as work proceeds. Last updated: 2026-11-27.
+Status: **M0 to M10 built, and half the redesign (M11a): the app is released (v0.21.1 the latest) and in daily use. M12, Google Play under ShipKnot: the closed test's first build (v0.20.0) is in Google's review, v0.21.1 follows as its first update, then 14 days with 12 or more testers and production in Sri Lanka. The rest of the redesign moved to Later, with the other ideas for afterwards.**
 
 A personal Android app that watches Sri Lankan official sources (gazettes, price controls, fuel, exchange rates, holidays, exam notices) and tells you when something new lands. GitHub Actions does most of the watching and the app reads what it publishes; the two sources that only answer inside Sri Lanka are read by the app itself.
 
@@ -102,7 +102,7 @@ A personal Android app that watches Sri Lankan official sources (gazettes, price
   - Store listing: title "Lanka Radar"; short description "Fuel and gas prices, power cuts, gazettes, jobs and holidays in Sri Lanka"; category Tools; target age 18 and over (outside the Families policy); content rating from the questionnaire. Screenshots of the redesigned tabs at store size, with real data for the tests' sample place (never the user's places), and a 1024 x 500 feature graphic from the README banner. The copy and graphics live in `docs/store/`.
   - Data safety: no data collected or shared. Places, their points and "Use my location" stay on the phone; the app only downloads public data (the data site, the official sources, OpenStreetMap's tiles) and sends nothing about the user beyond what any download carries (EDLCare sees which load shedding groups are looked up). The privacy page says the same.
   - Builds: the release workflow also builds an AAB with the same version and key and attaches it to the release; it is uploaded to Play by hand. geolocator's location foreground service (unused: the app asks for one position at a time) comes out of the manifest, so Play doesn't ask for a foreground service declaration; WorkManager's short service needs none. Versions stay automatic (no forced 1.0.0).
-  - Order: the Play blockers first (permissions, the AAB, the data site), then the closed test (12 or more testers for 14 days: a testing community plus friends and family in Sri Lanka). The off-switch and M11b ship as test updates; then production access and a full rollout in Sri Lanka.
+  - Order: the Play blockers first (permissions, the AAB, the data site), then the closed test (12 or more testers for 14 days: a testing community plus friends and family in Sri Lanka). The off-switch ships as a test update, as M11b would have before it moved to Later (27 Nov); then production access and a full rollout in Sri Lanka.
   - Accepted risk: with public traffic a phone source may block the app or change; the off-switch limits the harm, and its section says Paused until it is fixed.
 
 ### Defaults (accepted 2026-10-16)
@@ -148,7 +148,7 @@ A personal Android app that watches Sri Lankan official sources (gazettes, price
 - `scrapers/`: Python 3.12 package, one module per source. A shared HTTP client (retries, polite user agent, a pause between pages, never downloads a known PDF twice). From M4: PDF text through pdfplumber, with pdfminer for the glyph IDs of Arial Unicode Tamil. No OCR: every gazette so far has a text layer. Tests run on saved fixtures, not live sites.
 - `app/`: Flutter, Android only.
 - `scripts/release/`: works out the next version and the release notes (Python, standard library only, with tests).
-- `.github/workflows/`: `scrape.yml` (every hour, commits to `data`), `ci.yml` (Python and Flutter checks), `release.yml` (signed APK to GitHub Releases), `pr-title.yml` (Conventional Commit titles).
+- `.github/workflows/`: `scrape.yml` (commits to `data`), `hourly.yml` (starts Scrape every hour since 27 Nov, as GitHub's own schedule let only about three runs a day through), `pages.yml` (publishes `data` with `site/`, from M12d), `ci.yml` (Python and Flutter checks), `release.yml` (signed APK and AAB to GitHub Releases), `pr-title.yml` (Conventional Commit titles).
 - `ruff.toml` at the root holds the Python lint and format settings for both `scrapers/` and `scripts/`.
 
 **Data branch (`data`)**
@@ -158,7 +158,7 @@ A personal Android app that watches Sri Lankan official sources (gazettes, price
 - `months/<yyyy-mm>.json` (from M5): every item published in that month, for the app's history and so that later fixes to older items (a Tamil title found by a re-read) reach the phone. `months/index.json` lists each month with its item count and a hash of its file, so the app downloads only the months that changed.
 - `datasets/<name>.json`: values for the "now" strip and reminders: `usd-lkr` (Frankfurter's copy of the daily rate since 1 January 2026, a backup for the phone's same-day CBSL rate) and `holidays` (public holidays from 2026 on). Fuel prices live on the phone, which reads them itself.
 - `state/<name>.json`: the scrapers' own bookkeeping, not for the app (e.g. the gazette action ID and the newest gazette seen).
-- `status.json`: when the last run happened, and per source the last run, last success, last error and failures in a row. A source that fails 3 runs in a row fails the workflow once (one email); later failures are only recorded, and the app flags the source.
+- `status.json`: when the last run happened, and per source the last run, last success, last error and failures in a row. A source that fails 3 runs in a row fails one run (one email; a run the hourly chain started leaves that to the next scheduled or manual run, since GitHub emails only whoever started a run); later failures are only recorded, and the app flags the source.
 - Item fields: `id`, `source`, `topic` (`prices`, `gazettes`, `rates`, `holidays`, `exams`), `issuer`, `headline` (en, ta), `keyNumbers`, `published`, `effective`, `links` (pdf_en, pdf_ta, pdf_si, image, page), `data` (structured values, e.g. a gazette's number and group), `alert`.
 - The app reads `shipknot.github.io/lanka-radar/...`, the `data` branch as GitHub Pages publishes it (raw.githubusercontent.com until M12d2): public, no token.
 
@@ -331,8 +331,7 @@ Three pull requests, alongside M7's two weeks:
 On the branch `feat/ui-redesign`, each step with its tests, after the user had seen the previews and tried them on the phone:
 
 - [x] M11a, the kit and the main screens: the marker colours and tabular figures; the sweep, draw in and press; sparklines, range tracks, change bars and countdown rings; the title bar's radar; Today (the pulse, this week), Prices (pinned section names, sparklines, the rate chart, change bars, wholesale tracks), Notices (the timeline, underlined topics, weekly folds), Dates (the calendar, date blocks), Power's 24 hour strip and the Sources radar
-- [ ] M11b, the rest: the item page, the chart page, the quiet hours dial, Offline PDFs, Search and About; numbers that roll, pings and the radar pull to refresh
-- [ ] M11c, checked on the phone in both modes, with animations on and off
+- M11b, the rest (the item page, the chart page, the quiet hours dial, Offline PDFs, Search and About; numbers that roll, pings and the radar pull to refresh), and M11c, its check on the phone in both modes: moved to Later on 27 Nov, after you saw M11b's mockups
 
 ### M12: Google Play
 
@@ -349,7 +348,7 @@ Published by ShipKnot in Sri Lanka; the decisions are under "Google Play (M12 gr
 - M12g, during the 14 days, each a test update:
   - [x] M12g1: Jobs (PSC) read on the phone, with the workflow's item IDs (the workflow stopped reading it on 26 Nov, since the site refuses servers abroad); a phone source that has never worked on the phone doesn't warn, so testers abroad don't see "A source has gone quiet"
   - [x] M12g2: the remote off-switch (`site/switches.json`, published with the data)
-  - [ ] M12g3: M11b and M11c; screenshots taken again after M11b
+  - M12g3 (M11b and M11c, then new screenshots): dropped when M11b moved to Later; the store keeps its screenshots
 - [ ] M12h (you): production access applied for once 12 or more testers have been in for 14 days, then production in Sri Lanka at full rollout; afterwards the README's install section gets the Play link beside the APK, and the ShipKnot site a card
 
 ## Open questions
@@ -365,6 +364,7 @@ Published by ShipKnot in Sri Lanka; the decisions are under "Google Play (M12 gr
 - Supermarket prices (Keells, Cargills, Glomark), if a fair way to read them turns up
 - More of the weekly gazettes (beyond vacancies and exams), Acts and Bills; water interruptions, if the Water Board starts publishing them
 - OCR (Tesseract, on GitHub's servers) for Tamil PDFs in a font the reader doesn't know, if one shows up
+- The rest of the redesign (M11b and M11c), set aside on 27 Nov
 
 ## Log
 
@@ -438,3 +438,4 @@ Published by ShipKnot in Sri Lanka; the decisions are under "Google Play (M12 gr
 | 2026-11-27 | M12g1: the phone reads the PSC's homepage by the workflow's old rules (the same page, recruitments and calls for applications since 2026, `jobs-psc-<seconds>` IDs, the day in Sri Lanka time) and files the items in the phone's month, where the workflow's earlier copies win. It reads the page (about 130 KB) at most every six hours once a read has worked, and on the next sync after one that failed; from Sri Lanka on 27 Nov it listed 7 announcements, none of them a new recruitment. The clean-up that drops the phone's USD/LKR items once the workflow's rates reach their day dropped every item in the phone's month, so it now drops only rate items. Sources lists "Jobs (PSC)" with the phone's sources, and a phone source that has never answered on the phone reads "Not reached yet" and raises no warning, so a phone abroad (testers, reviewers) sees none; once it has answered, the one-day rule applies as before. The privacy policy names the PSC among the sources the phone reads (effective 27 November 2026). |
 | 2026-11-27 | M12g2: the remote off-switch. `site/switches.json` (`{"paused": [...]}`, published by the Pages workflow at the site's root) names phone sources by their status names (`ceypetco`, `cbsl`, `cbsl-market`, `harti`, `edlcare`, `psc`). Each phone sync reads it first, with its ETag; a phone that can't reach the site keeps the copy it read last, and a missing or unreadable file pauses nothing (a 404 drops the stored copy). Every read goes through the repository's `_read`, which skips a paused source without recording a run; EDLCare's group lookups check it too, and the Power tab's check doesn't count a paused EDLCare as failing. What was read before stays: the Prices sections say "CEYPETCO, paused", "Central Bank, paused", "<market>, paused" and "<centre>, paused" in place of the date, the Power tab's line says "Paused" in place of "Checked", and Sources says "Paused" with no error and raises no warning. Lookups a person starts (a place's province and area) still go to EDLCare. |
 | 2026-11-27 | Prices scrolled with lag (the user's report). It is one scroll view with every section built, and without a layer of its own each section's rows, sparklines and charts were painted again on every frame of a scroll; following the scroll called setState, so each time the top section changed the whole tab rebuilt and went through the feed again (the price orders and the controlled prices' histories); and since every tab lives in one IndexedStack under one BlocBuilder each, any home state change (a refresh starting or ending, a topic picked in Notices) rebuilt Prices too. Now each section paints into its own layer (RepaintBoundary), the bar of names follows the scroll through a ValueNotifier, the tab rebuilds only for the parts of the state it shows (buildWhen), and the feed is gone through only when it changes. Nothing on screen changes. |
+| 2026-11-27 | The scrape ran about three times a day, not hourly: GitHub let 39 scheduled runs through from 14 to 27 November, 7 to 12 hours apart. An outside scheduler would mean another account and a token, so the fix stays inside GitHub: the Hourly workflow's runs each wait an hour on the `hourly` environment's wait timer (no runner held, not billed), then start the next run and Scrape. Each Scrape run starts one if none is waiting, so the chain comes back after a hiccup, and a run that didn't wait stops the chain rather than spin. GitHub emails a failed run only to whoever started it, and the chain's runs are its bot's, so they scrape with `--no-alert`, and an outage's one alert comes from the next scheduled or manual run (`alerted` in its `status.json` entry until the source works again). For the same reason Scrape now starts Pages itself rather than Pages waiting on `workflow_run`: events from a run's own token start no workflows (dispatches excepted). M11b and M11c, and with them M12g3, moved to Later after you saw M11b's mockups. |

@@ -1,0 +1,55 @@
+# Starts Scrape every hour. GitHub's schedule in scrape.yml starts it late and
+# skips most hours (about three runs a day get through), so this keeps a chain
+# instead: each run waits an hour in the hourly environment, whose wait timer
+# holds no runner and isn't billed, then starts the next run and Scrape. Each
+# Scrape run starts the chain again if it has stopped.
+#
+# One-time setup: Settings > Environments > hourly > Wait timer: 60 minutes.
+name: Hourly
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write # start this workflow and Scrape
+  contents: read
+
+jobs:
+  tick:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    environment:
+      name: hourly
+      deployment: false # a wait, not a deployment
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      # Without the wait timer each run would start the next at once, so a run
+      # that didn't wait stops the chain instead.
+      - name: Check the wait
+        id: wait
+        run: |
+          created=$(gh api "repos/$GH_REPO/actions/runs/$GITHUB_RUN_ID" --jq .created_at)
+          minutes=$(( ($(date +%s) - $(date -d "$created" +%s)) / 60 ))
+          echo "Waited $minutes minutes."
+          if [ "$minutes" -lt 50 ]; then
+            echo "::error::Give the hourly environment its wait timer: Settings > Environments > hourly > Wait timer: 60 minutes."
+            exit 1
+          fi
+
+      # The next run first, so a hiccup starting Scrape can't break the chain. A
+      # run already waiting (one started by hand) carries the chain instead.
+      - name: Start the next run
+        run: |
+          waiting=$(gh api "repos/$GH_REPO/actions/workflows/hourly.yml/runs?per_page=20" \
+            --jq "[.workflow_runs[] | select(.status != \"completed\" and .id != $GITHUB_RUN_ID)] | length")
+          if [ "$waiting" -eq 0 ]; then
+            gh workflow run hourly.yml --ref main
+          else
+            echo "Another run is already waiting."
+          fi
+
+      - name: Start Scrape
+        if: ${{ !cancelled() && steps.wait.outcome == 'success' }}
+        run: gh workflow run scrape.yml --ref main
