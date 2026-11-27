@@ -52,7 +52,9 @@ Lanka Radar's first release on Google Play: prices, notices, dates and power cut
 
 ## Store settings
 
-- Category: Tools. Free, no ads, no in-app purchases.
+- Default language: English (United States).
+- Category: Tools, no tags. Free, no ads, no in-app purchases.
+- AI asset declaration (asked when the listing is saved): don't label. The screenshots are the app's own screens and the graphics are drawn in code.
 - Email: shipknot.dev@gmail.com
 - Website: https://shipknot.github.io/lanka-radar/
 - Privacy policy: https://shipknot.github.io/lanka-radar/privacy/
@@ -62,8 +64,8 @@ Lanka Radar's first release on Google Play: prices, notices, dates and power cut
 - Privacy policy: the link above.
 - App access: all functionality is available without special access.
 - Ads: no ads.
-- Content rating: from the questionnaire (a utility with no user-generated content, violence or purchases).
-- Target audience: 18 and over.
-- News app: no. Government app: no (developed by ShipKnot, not for a government). Financial features: none. Health: none.
+- Content rating: "All other app types". Online content: yes (the notices arrive after install), with no violence, sexuality, language or drugs in it; every other answer no. Rated 3+ everywhere (ESRB Everyone, PEGI 3, USK 0).
+- Target audience: 18 and over. Minors are not blocked: the content suits everyone, and students may want the exam notices.
+- News app: no. Government app: no (developed by ShipKnot, not for a government). Financial features: none. Health: none. Advertising ID: not used.
 - Data safety: no data collected or shared. Places, their points and "Use my location" stay on the phone; the app only downloads public data.
 - Countries: production in Sri Lanka only; the closed test in every country.
