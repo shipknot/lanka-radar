@@ -58,10 +58,20 @@ class _PricesTabState extends State<PricesTab> {
   final _scroll = ScrollController();
   final _view = GlobalKey();
   final _keys = [for (final _ in PricesTab.sections) GlobalKey()];
-  int _shown = 0;
+
+  /// The section at the top. Outside the tab's state, so following the scroll
+  /// rebuilds only the bar of names, not every section under it.
+  final _shown = ValueNotifier(0);
 
   /// Scrolling to a section the user picked: the bar keeps their pick.
   bool _jumping = false;
+
+  /// What the sections take from the feed, worked out again only when the
+  /// feed changes: the latest price orders and the controlled prices.
+  List<FeedItem>? _items;
+  List<FeedItem> _priceOrders = const [];
+  Map<String, List<PricePoint>> _goods = const {};
+  Map<String, FeedItem> _setBy = const {};
 
   @override
   void initState() {
@@ -72,8 +82,31 @@ class _PricesTabState extends State<PricesTab> {
   @override
   void dispose() {
     _scroll.dispose();
+    _shown.dispose();
     super.dispose();
   }
+
+  void _read(List<FeedItem> items) {
+    if (identical(items, _items)) {
+      return;
+    }
+    _items = items;
+    _priceOrders = [
+      for (final item in items)
+        if (item.topic == 'prices' && !isGasList(item)) item,
+    ].take(PricesTab.orders).toList();
+    _goods = goodsHistory(items);
+    _setBy = goodsOrders(items);
+  }
+
+  /// The parts of the home state this tab shows; anything else (a refresh
+  /// starting, a topic picked in Notices) leaves it as it is.
+  static bool _changed(HomeState before, HomeState after) =>
+      before.nowCard != after.nowCard ||
+      !identical(before.items, after.items) ||
+      before.newSince != after.newSince ||
+      before.gasDistrict != after.gasDistrict ||
+      before.wholesaleCentre != after.wholesaleCentre;
 
   /// Picks the section at the top of the screen.
   void _follow() {
@@ -92,9 +125,7 @@ class _PricesTabState extends State<PricesTab> {
     if (_scroll.position.extentAfter < 8) {
       shown = _keys.length - 1;
     }
-    if (shown != _shown) {
-      setState(() => _shown = shown);
-    }
+    _shown.value = shown;
   }
 
   Future<void> _jump(int index) async {
@@ -102,10 +133,8 @@ class _PricesTabState extends State<PricesTab> {
     if (target == null) {
       return;
     }
-    setState(() {
-      _shown = index;
-      _jumping = true;
-    });
+    _shown.value = index;
+    _jumping = true;
     await Scrollable.ensureVisible(
       target,
       duration: Motion.of(context, Motion.long),
@@ -117,6 +146,7 @@ class _PricesTabState extends State<PricesTab> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: _changed,
       builder: (context, state) {
         final now = state.nowCard;
         if (now == null) {
@@ -124,25 +154,30 @@ class _PricesTabState extends State<PricesTab> {
         }
         final today = DateTime.now();
         final items = state.items ?? const <FeedItem>[];
-        final priceOrders = [
-          for (final item in items)
-            if (item.topic == 'prices' && !isGasList(item)) item,
-        ].take(PricesTab.orders);
-        final goods = goodsHistory(items);
-        final setBy = goodsOrders(items);
+        _read(items);
+        final priceOrders = _priceOrders;
+        final goods = _goods;
+        final setBy = _setBy;
         void chart(ChartSubject subject) =>
             Navigator.of(context).push(PriceChartPage.route(subject));
-        Widget keyed(int index, Widget section) =>
-            KeyedSubtree(key: _keys[index], child: section);
+        // Each section paints into its own layer, so scrolling moves the
+        // layers instead of painting every row and chart again each frame.
+        Widget keyed(int index, Widget section) => KeyedSubtree(
+          key: _keys[index],
+          child: RepaintBoundary(child: section),
+        );
         return Column(
           children: [
             Align(
               alignment: AlignmentDirectional.centerStart,
-              child: UnderlineTabs(
-                labels: PricesTab.sections,
-                selected: _shown,
-                onSelected: (index) => unawaited(_jump(index)),
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: ValueListenableBuilder(
+                valueListenable: _shown,
+                builder: (context, shown, _) => UnderlineTabs(
+                  labels: PricesTab.sections,
+                  selected: shown,
+                  onSelected: (index) => unawaited(_jump(index)),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                ),
               ),
             ),
             Expanded(
@@ -296,23 +331,25 @@ class _PricesTabState extends State<PricesTab> {
                         ),
                       ),
                       if (priceOrders.isNotEmpty)
-                        Section(
-                          title: 'Price orders',
-                          card: false,
-                          children: [
-                            ItemGroup(
-                              children: [
-                                for (final item in priceOrders)
-                                  ItemTile(
-                                    item: item,
-                                    isNew: state.isNew(item),
-                                    onTap: () => Navigator.of(
-                                      context,
-                                    ).push(ItemPage.route(item)),
-                                  ),
-                              ],
-                            ),
-                          ],
+                        RepaintBoundary(
+                          child: Section(
+                            title: 'Price orders',
+                            card: false,
+                            children: [
+                              ItemGroup(
+                                children: [
+                                  for (final item in priceOrders)
+                                    ItemTile(
+                                      item: item,
+                                      isNew: state.isNew(item),
+                                      onTap: () => Navigator.of(
+                                        context,
+                                      ).push(ItemPage.route(item)),
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       Align(
                         alignment: AlignmentDirectional.centerStart,
