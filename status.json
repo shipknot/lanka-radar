@@ -1,46 +1,46 @@
 {
   "schema": 1,
-  "checked": "2026-11-28T03:43:21Z",
+  "checked": "2026-11-28T04:43:35Z",
   "sources": {
     "holidays": {
-      "lastRun": "2026-11-28T03:43:21Z",
-      "lastSuccess": "2026-11-28T03:43:21Z",
+      "lastRun": "2026-11-28T04:43:35Z",
+      "lastSuccess": "2026-11-28T04:43:35Z",
       "lastError": null,
       "failures": 0
     },
     "rates": {
-      "lastRun": "2026-11-28T03:43:21Z",
-      "lastSuccess": "2026-11-28T03:43:21Z",
+      "lastRun": "2026-11-28T04:43:35Z",
+      "lastSuccess": "2026-11-28T04:43:35Z",
       "lastError": null,
       "failures": 0
     },
     "gazettes": {
-      "lastRun": "2026-11-28T03:43:21Z",
-      "lastSuccess": "2026-11-28T03:43:21Z",
+      "lastRun": "2026-11-28T04:43:35Z",
+      "lastSuccess": "2026-11-28T04:43:35Z",
       "lastError": null,
       "failures": 0
     },
     "exams": {
-      "lastRun": "2026-11-28T03:43:21Z",
-      "lastSuccess": "2026-11-28T03:43:21Z",
+      "lastRun": "2026-11-28T04:43:35Z",
+      "lastSuccess": "2026-11-28T04:43:35Z",
       "lastError": null,
       "failures": 0
     },
     "gas": {
-      "lastRun": "2026-11-28T03:43:21Z",
-      "lastSuccess": "2026-11-28T03:43:21Z",
+      "lastRun": "2026-11-28T04:43:35Z",
+      "lastSuccess": "2026-11-28T04:43:35Z",
       "lastError": null,
       "failures": 0
     },
     "weekly": {
-      "lastRun": "2026-11-28T03:43:21Z",
-      "lastSuccess": "2026-11-28T03:43:21Z",
+      "lastRun": "2026-11-28T04:43:35Z",
+      "lastSuccess": "2026-11-28T04:43:35Z",
       "lastError": null,
       "failures": 0
     },
     "laugfs": {
-      "lastRun": "2026-11-28T03:43:21Z",
-      "lastSuccess": "2026-11-28T03:43:21Z",
+      "lastRun": "2026-11-28T04:43:35Z",
+      "lastSuccess": "2026-11-28T04:43:35Z",
       "lastError": null,
       "failures": 0
     }
